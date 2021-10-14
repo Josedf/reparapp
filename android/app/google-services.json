@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "355463595594",
+    "project_id": "reparapp-6345a",
+    "storage_bucket": "reparapp-6345a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355463595594:android:9d99d5b0d5399c7dee48b3",
+        "android_client_info": {
+          "package_name": "com.example.reparapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355463595594-e7acj6mo8m91gheetn897u297c3115uc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSZrYU1SzpvT47KWk6JYmrszl7au7qFrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355463595594-e7acj6mo8m91gheetn897u297c3115uc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
