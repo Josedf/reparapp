@@ -23,6 +23,7 @@ class FirebaseSignUp extends StatelessWidget {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
+      Navigator.of(context).pop();
     }
   }
 
@@ -34,7 +35,7 @@ class FirebaseSignUp extends StatelessWidget {
               onPressed: () {
                 _signup(context);
               },
-              child: Text("Sign up"))),
+              child: Text("Sign up client"))),
     );
   }
 }

@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:reparapp/firebase/firebase_login_fixer.dart';
 import 'package:reparapp/firebase/firebase_signup_fixer.dart';
 
 import 'firebase_signup_client.dart';
 
-class FirebaseLogIn extends StatelessWidget {
-  const FirebaseLogIn({Key? key}) : super(key: key);
+class FirebaseLogInFixer extends StatelessWidget {
+  const FirebaseLogInFixer({Key? key}) : super(key: key);
 
   _login() async {
     try {
@@ -35,6 +34,7 @@ class FirebaseLogIn extends StatelessWidget {
               icon: Icons.email,
               onPressed: () {
                 _login();
+                Navigator.of(context).pop();
               }),
         ),
         TextButton(
@@ -42,23 +42,9 @@ class FirebaseLogIn extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FirebaseLogInFixer()));
-            },
-            child: Text("SignIn as fixer")),
-        TextButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FirebaseSignUp()));
-            },
-            child: Text("Create account as client")),
-        TextButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
                       builder: (context) => FirebaseSignUpFixer()));
             },
-            child: Text("Create account as fixer")),
+            child: Text("Create account")),
       ],
     );
   }

@@ -74,6 +74,7 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
         setState(() {
           val = true;
         });
+        break;
       }
     } else {
       setState(() {
