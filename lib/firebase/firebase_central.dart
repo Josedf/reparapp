@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reparapp/firebase/firebase_fixer_logged.dart';
+import 'package:reparapp/firebase2/firebase_login_2.dart';
 
 import 'firebase_client_logged.dart';
 import 'firebase_login.dart';
@@ -41,7 +42,8 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
           //   }
           // });
         } else {
-          return FirebaseLogIn();
+          return FirebaseLogIn2();
+          //return FirebaseLogIn();
         }
 
         // if (snapshot.hasData) {
