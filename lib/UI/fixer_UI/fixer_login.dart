@@ -1,22 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reparapp/firebase/firebase_login_fixer.dart';
-import 'package:reparapp/firebase/firebase_signup_client.dart';
-import 'package:reparapp/firebase/firebase_signup_fixer.dart';
-import 'package:reparapp/firebase2/firebase_signup_fixer2.dart';
+import 'package:reparapp/UI/client_UI/client_login.dart';
+import 'fixer_signup.dart';
 
-import 'firebase_login_2.dart';
-//import 'package:get/get.dart';
 
-class FirebaseLogInFixer2 extends StatefulWidget {
-  const FirebaseLogInFixer2({Key? key}) : super(key: key);
+class FixerLogIn extends StatefulWidget {
+  const FixerLogIn({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<FirebaseLogInFixer2> {
+class _LoginPageState extends State<FixerLogIn> {
   _login() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -115,7 +111,7 @@ class _LoginPageState extends State<FirebaseLogInFixer2> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FirebaseSignUpFixer2()));
+                            builder: (context) => FixerSignUp()));
                   },
                   child: Text("Don't have an account? Sign up as fixer",
                       style:
@@ -125,7 +121,7 @@ class _LoginPageState extends State<FirebaseLogInFixer2> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FirebaseLogIn2()));
+                            builder: (context) => ClientLogIn()));
                   },
                   child: Text("Back to login as a client",
                       style:

@@ -1,23 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reparapp/firebase/firebase_login_fixer.dart';
-import 'package:reparapp/firebase/firebase_signup_client.dart';
-import 'package:reparapp/firebase/firebase_signup_fixer.dart';
-import 'package:reparapp/firebase2/firebase_signup_fixer2.dart';
-
-import 'firebase_login_fixer2.dart';
-import 'firebase_signup_client2.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_signup.dart';
+import 'client_signup.dart';
 //import 'package:get/get.dart';
 
-class FirebaseLogIn2 extends StatefulWidget {
-  const FirebaseLogIn2({Key? key}) : super(key: key);
+class ClientLogIn extends StatefulWidget {
+  const ClientLogIn({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<FirebaseLogIn2> {
+class _LoginPageState extends State<ClientLogIn> {
   _login() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -129,7 +125,7 @@ class _LoginPageState extends State<FirebaseLogIn2> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FirebaseLogInFixer2()));
+                            builder: (context) => FixerLogIn()));
                   },
                   child: Text("Are you fixer? Log In",
                       style:
@@ -139,7 +135,7 @@ class _LoginPageState extends State<FirebaseLogIn2> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FirebaseSignUpFixer2()));
+                            builder: (context) => FixerSignUp()));
                   },
                   child: Text("Don't have an account? Sign up as fixer",
                       style:
@@ -149,7 +145,7 @@ class _LoginPageState extends State<FirebaseLogIn2> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FirebaseSignUpClient2()));
+                            builder: (context) => ClientSignUp()));
                   },
                   child: Text("Don't have an account? Sign up as client",
                       style:

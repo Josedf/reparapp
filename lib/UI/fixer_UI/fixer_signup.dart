@@ -2,24 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reparapp/firebase/firebase_login_fixer.dart';
-import 'package:reparapp/firebase/firebase_signup_client.dart';
-import 'package:reparapp/firebase/firebase_signup_fixer.dart';
+import 'fixer_login.dart';
 
-class FirebaseSignUpClient2 extends StatefulWidget {
-  const FirebaseSignUpClient2({Key? key}) : super(key: key);
+class FixerSignUp extends StatefulWidget {
+  const FixerSignUp({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<FirebaseSignUpClient2> {
+class _LoginPageState extends State<FixerSignUp> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
-  final addressController = TextEditingController();
-  String dropdownValue = 'Select your city';
+  String dropdownValue = 'Select your category';
 
   bool _isObscure = true;
 
@@ -32,22 +29,25 @@ class _LoginPageState extends State<FirebaseSignUpClient2> {
   Future<void> _signup(BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: "c@c.com", password: "123456");
+          .createUserWithEmailAndPassword(
+              email: "c2@c.com", password: "123456");
 
       final _firestore = FirebaseFirestore.instance;
       _firestore.collection("users").add({
-        "email": "c@c.com",
-        "type": "client",
+        "email": "c2@c.com",
+        "type": "fixer",
       });
 
-      Navigator.of(context).pop();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => FixerLogIn()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      Navigator.of(context).pop();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => FixerLogIn()));
     }
   }
 
@@ -142,7 +142,7 @@ class _LoginPageState extends State<FirebaseSignUpClient2> {
                           });
                         },
                         items: <String>[
-                          'Select your city',
+                          'Select your category',
                           'Two',
                           'Free',
                           'Four'
@@ -154,35 +154,47 @@ class _LoginPageState extends State<FirebaseSignUpClient2> {
                         }).toList(),
                       ),
                     ),
+                    MaterialButton(
+                      onPressed: () {},
+                      child: Text("Upload certificate",
+                          style: TextStyle(
+                              fontSize: 16, color: Color(0xFF7879F1))),
+                      minWidth: double.maxFinite,
+                      color: Color(0x9FFFFFFF),
+                    ),
+                    MaterialButton(
+                      onPressed: () {},
+                      child: Text("Upload profile picture",
+                          style: TextStyle(
+                              fontSize: 16, color: Color(0xFF7879F1))),
+                      minWidth: double.maxFinite,
+                      color: Color(0x9FFFFFFF),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                      child: TextFormField(
-                        controller: addressController,
-                        decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            filled: true,
-                            fillColor: Color(0xFFF6F6F6),
-                            labelText: 'Address'),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _signup(context);
+                        },
+                        child: Text("Sign Up",
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF7879F1),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                        ),
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _signup(context);
-                      },
-                      child: Text("Sign Up",
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF7879F1),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                      ),
-                    ),
+                    )
                   ],
                 )),
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FixerLogIn()));
                   },
                   child: Text("already have an account? Log in",
                       style:
