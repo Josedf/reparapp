@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 
+import 'UI/client_UI/client_login.dart';
+import 'UI/fixer_UI/fixer_signup.dart';
 import 'firebase/firebase_central.dart';
 
 void main() {
@@ -19,6 +22,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        '/loginClient' : (context) => const ClientLogIn(),
+        '/signupFixer' : (context) => const FixerSignUp(),
+        '/loginFixer' : (context) => const FixerLogIn()
+      },
+
       home: Scaffold(
           resizeToAvoidBottomInset: false,
           body: FutureBuilder(
