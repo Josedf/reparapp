@@ -54,12 +54,12 @@ class _LoginPageState extends State<ClientLogIn> {
                 style: TextStyle(fontSize: 30),
               ),
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(10.0),
                 child: Form(
                     child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
                       child: TextFormField(
                         controller: emailController,
                         decoration: const InputDecoration(
@@ -70,7 +70,7 @@ class _LoginPageState extends State<ClientLogIn> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
                       child: TextFormField(
                         obscureText: _isObscure,
                         controller: passwordController,

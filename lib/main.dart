@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: FutureBuilder(
         future: _initialization,
         builder: (context, snapshot) {
