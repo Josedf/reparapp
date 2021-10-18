@@ -191,10 +191,7 @@ class _LoginPageState extends State<FixerSignUp> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FixerLogIn()));
+                    Navigator.pop(context);
                   },
                   child: Text("already have an account? Log in",
                       style:
