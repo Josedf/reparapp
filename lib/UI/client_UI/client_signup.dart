@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
 
@@ -36,6 +35,10 @@ class _LoginPageState extends State<ClientSignUp> {
       _firestore.collection("users").add({
         "email": "c@c.com",
         "type": "client",
+        "name": "Jose Fernandez",
+        "phone": "3011234567",
+        "address": "Cra xx # xx",
+        "city": "Barranquilla",
       });
 
       Navigator.of(context).pop();

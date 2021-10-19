@@ -19,30 +19,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFE8E9FC)),
+      theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xFFE8E9FC),
+          fontFamily: 'Inder'),
       routes: {
-        '/loginClient' : (context) => const ClientLogIn(),
-        '/signupFixer' : (context) => const FixerSignUp(),
-        '/loginFixer' : (context) => const FixerLogIn()
+        '/loginClient': (context) => const ClientLogIn(),
+        '/signupFixer': (context) => const FixerSignUp(),
+        '/loginFixer': (context) => const FixerLogIn()
       },
-
       home: Scaffold(
           resizeToAvoidBottomInset: false,
           body: FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print("error ${snapshot.error}");
-            return Wrong();
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            //return GoogleCentral();
-            return FirebaseCentral();
-          }
+            future: _initialization,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print("error ${snapshot.error}");
+                return Wrong();
+              }
+              if (snapshot.connectionState == ConnectionState.done) {
+                //return GoogleCentral();
+                return FirebaseCentral();
+              }
 
-          return Loading();
-        },
-      )),
+              return Loading();
+            },
+          )),
     );
   }
 }
