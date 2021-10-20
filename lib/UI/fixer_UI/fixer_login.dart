@@ -118,10 +118,7 @@ class _LoginPageState extends State<FixerLogIn> {
                           TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ClientLogIn()));
+                    Navigator.of(context).pushNamedAndRemoveUntil('/loginClient', (Route<dynamic> route) => false);
                   },
                   child: Text("Back to login as a client",
                       style:
