@@ -39,9 +39,7 @@ class _LoginPageState extends State<ClientLogIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
+    return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -140,6 +138,6 @@ class _LoginPageState extends State<ClientLogIn> {
                           TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
             ],
           ),
-        ));
+        );
   }
 }
