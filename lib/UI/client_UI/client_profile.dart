@@ -111,7 +111,8 @@ class _ProfilePageState extends State<ClientProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Email: " + this.email),
+                    child: Text("Email: " + this.email,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],
               ),
@@ -121,7 +122,8 @@ class _ProfilePageState extends State<ClientProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Phone: " + this.phone),
+                    child: Text("Phone: " + this.phone,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],
               ),
@@ -131,7 +133,8 @@ class _ProfilePageState extends State<ClientProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Address: " + this.address),
+                    child: Text("Address: " + this.address,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],
               ),
@@ -141,7 +144,8 @@ class _ProfilePageState extends State<ClientProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("City: " + this.city),
+                    child: Text("City: " + this.city,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],
               ),
@@ -158,6 +162,7 @@ class _ProfilePageState extends State<ClientProfile> {
                     ),
                   ),
                   InkWell(
+                    onTap: () {},
                     // this is the one you are looking for..........
                     child: new Container(
                       //width: 50.0,
