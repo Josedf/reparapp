@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
+import 'package:reparapp/UI/client_UI/client_profile.dart';
 import 'package:reparapp/firebase/firebase_fixer_logged.dart';
-
 
 import 'firebase_client_logged.dart';
 import 'firebase_login.dart';
@@ -31,7 +31,7 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
           if (val) {
             return FirebaseFixerLogged();
           } else {
-            return FirebaseLoggedIn();
+            return ClientProfile();
           }
           // bool val;
           // getUsers(user.uid).then((value) {
@@ -58,15 +58,6 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
   }
 
   void getUsers(email) async {
-    // CollectionReference collectionReference =
-    //     FirebaseFirestore.instance.collection("users");
-
-    // QuerySnapshot users = await collectionReference.get();
-    // if (users.docs.isNotEmpty) {
-    //   for (var doc in users.docs) {
-    //     print(doc.data());
-    //   }
-    // }
     final _firestore = FirebaseFirestore.instance;
     var sRef = _firestore
         .collection("users")
