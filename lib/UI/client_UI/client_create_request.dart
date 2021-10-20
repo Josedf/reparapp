@@ -23,7 +23,9 @@ class _CreateRequestState extends State<ClientCreateRequest> {
             children: [
               Padding(
                   padding: EdgeInsets.only(top: statusBarHeight / 2, left: 5),
-                  child: TextButton(onPressed: () {}, child: Text("Back"))),
+                  child: TextButton(onPressed: () {
+                    Navigator.pop(context);
+                  }, child: Text("Back"))),
               Padding(
                   padding: EdgeInsets.only(top: statusBarHeight / 2, left: 25),
                   child: Center(

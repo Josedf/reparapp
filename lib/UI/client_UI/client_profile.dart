@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_signup.dart';
@@ -162,7 +163,12 @@ class _ProfilePageState extends State<ClientProfile> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                       Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ClientCreateRequest()));
+                    },
                     // this is the one you are looking for..........
                     child: new Container(
                       //width: 50.0,
