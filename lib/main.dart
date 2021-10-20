@@ -4,6 +4,7 @@ import 'package:reparapp/UI/client_UI/client_profile_fixer.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 
 import 'UI/client_UI/client_login.dart';
+import 'UI/client_UI/client_map.dart';
 import 'UI/client_UI/client_profile.dart';
 import 'UI/fixer_UI/fixer_edit_profile.dart';
 import 'UI/fixer_UI/fixer_profile.dart';
@@ -42,8 +43,7 @@ class MyApp extends StatelessWidget {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 //return GoogleCentral();
-                //return FirebaseCentral();
-                return FixerProfile();
+                return FirebaseCentral();
               }
 
               return Loading();
