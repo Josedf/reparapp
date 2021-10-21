@@ -101,35 +101,23 @@ class _ProfilePageState extends State<ClientProfile> {
                 ],
               ),
             )),
-        InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ClientCreateRequest()));
-            },
-            // this is the one you are looking for..........
-            child: Align(
-              alignment: Alignment.center,
-              child: new Container(
-                //width: 50.0,
-                //height: 50.0,
-                padding: const EdgeInsets.all(
-                    20.0), //I used some padding without fixed width and height
-                decoration: new BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  shape: BoxShape
-                      .circle, // You can use like this way or like the below line
-                  //borderRadius: new BorderRadius.circular(30.0),
-                  color: Color(0xFFA5A6F6),
-                ),
-                child: Icon(Icons.build,
-                    color: Colors.white,
-                    size:
-                        40), // You can add a Icon instead of text also, like below.
-                //child: new Icon(Icons.arrow_forward, size: 50.0, color: Colors.black38)),
-              ),
-            )),
+        Container(
+          alignment: Alignment.center,
+          child: Container(
+              height: 80,
+              width: 80,
+              child: FittedBox(
+                  child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ClientCreateRequest()));
+                },
+                backgroundColor: Color(0xFFA5A6F6),
+                child: Icon(Icons.build, color: Colors.white, size: 40),
+              ))),
+        )
       ],
     );
   }
