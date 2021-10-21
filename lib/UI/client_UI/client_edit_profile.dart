@@ -45,6 +45,45 @@ class _ProfilePageState extends State<ClientEditProfile> {
     );
   }
 
+  Widget mainButtons() {
+    return Stack(
+      children: [
+        Container(
+            height: 95,
+            alignment: AlignmentDirectional.bottomStart,
+            child: Container(
+              height: 60,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Cancel"),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF7879F1),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Accept"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF7879F1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                    ),
+                  )),
+                ],
+              ),
+            )),
+      ],
+    );
+  }
+
   // void updateinfo(datos en textfields) async {
 
   // }
@@ -148,36 +187,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
                 ),
               ),
               Text(""),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Accept",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Cancel",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                ],
-              ),
-              Text(""),
+              mainButtons(),
             ],
           ),
         ));
