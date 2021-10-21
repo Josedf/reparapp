@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
@@ -55,6 +58,79 @@ class _ProfilePageState extends State<ClientProfile> {
             //height: ,
             //width: ,
           )),
+    );
+  }
+
+  Widget mainButtons() {
+    return Stack(
+      children: [
+        Container(
+            height: 95,
+            alignment: AlignmentDirectional.bottomStart,
+            child: Container(
+              height: 60,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Icon(Icons.chat, size: 40),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF7879F1),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ClientEditProfile()));
+                    },
+                    child: Icon(Icons.edit, size: 40),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF7879F1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                    ),
+                  )),
+                ],
+              ),
+            )),
+        InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ClientCreateRequest()));
+            },
+            // this is the one you are looking for..........
+            child: Align(
+              alignment: Alignment.center,
+              child: new Container(
+                //width: 50.0,
+                //height: 50.0,
+                padding: const EdgeInsets.all(
+                    20.0), //I used some padding without fixed width and height
+                decoration: new BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                  shape: BoxShape
+                      .circle, // You can use like this way or like the below line
+                  //borderRadius: new BorderRadius.circular(30.0),
+                  color: Color(0xFFA5A6F6),
+                ),
+                child: Icon(Icons.build,
+                    color: Colors.white,
+                    size:
+                        40), // You can add a Icon instead of text also, like below.
+                //child: new Icon(Icons.arrow_forward, size: 50.0, color: Colors.black38)),
+              ),
+            )),
+      ],
     );
   }
 
@@ -150,59 +226,7 @@ class _ProfilePageState extends State<ClientProfile> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Icon(Icons.chat, size: 40),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ClientCreateRequest()));
-                    },
-                    // this is the one you are looking for..........
-                    child: new Container(
-                      //width: 50.0,
-                      //height: 50.0,
-                      padding: const EdgeInsets.all(
-                          20.0), //I used some padding without fixed width and height
-                      decoration: new BoxDecoration(
-                        shape: BoxShape
-                            .circle, // You can use like this way or like the below line
-                        //borderRadius: new BorderRadius.circular(30.0),
-                        color: Color(0xFFA5A6F6),
-                      ),
-                      child: Icon(Icons.build,
-                          size:
-                              60), // You can add a Icon instead of text also, like below.
-                      //child: new Icon(Icons.arrow_forward, size: 50.0, color: Colors.black38)),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ClientEditProfile()));
-                    },
-                    child: Icon(Icons.edit, size: 40),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                ],
-              ),
+              mainButtons()
             ],
           ),
         ));
