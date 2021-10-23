@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 class ClientCreateRequest extends StatefulWidget {
   const ClientCreateRequest({Key? key}) : super(key: key);
@@ -11,36 +14,42 @@ class ClientCreateRequest extends StatefulWidget {
 class _CreateRequestState extends State<ClientCreateRequest> {
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
+    double width = MediaQuery.of(context).size.width;
+
     String dropdownValue = 'Select your category';
     // TODO: implement build
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Align(
+                  alignment: Alignment.topCenter,
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Back", style: TextStyle(color: Color(0xFFA5A6F6))))),
               Padding(
-                  padding: EdgeInsets.only(top: statusBarHeight / 2, left: 5),
-                  child: TextButton(onPressed: () {
-                    Navigator.pop(context);
-                  }, child: Text("Back"))),
-              Padding(
-                  padding: EdgeInsets.only(top: statusBarHeight / 2, left: 25),
-                  child: Center(
-                      child: Text("Create Request",
-                          style: TextStyle(fontSize: 30))))
+                padding: EdgeInsets.only(left: 30),
+                child: Text("Create Request", style: TextStyle(fontSize: 30)),
+              )
             ],
           ),
           Padding(
               padding: EdgeInsets.all(10),
               child: Card(
-                  color: Colors.white,
+                  color: Color(0xFFF6F6F6),
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextField(
-                      maxLines: 8,
+                      maxLines: 12,
                       decoration: InputDecoration.collapsed(
                           hintText: "Post description here..."),
                     ),
@@ -75,12 +84,12 @@ class _CreateRequestState extends State<ClientCreateRequest> {
           Padding(
               padding: EdgeInsets.all(10),
               child: Card(
-                  color: Colors.white,
+                  color: Color(0xFFF6F6F6),
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextButton(
                         onPressed: () {},
-                        child: Text("Add your photos or videos here")),
+                        child: Text("Add your photos or videos here", style: TextStyle(color: Colors.black),)),
                   ))),
           Padding(
               padding: EdgeInsets.all(10),
@@ -102,6 +111,6 @@ class _CreateRequestState extends State<ClientCreateRequest> {
               ))
         ],
       ),
-    );
+    ));
   }
 }
