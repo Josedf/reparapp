@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
 
 class MainButtons extends StatelessWidget {
+  bool wrenchVisibility;
+  MainButtons({this.wrenchVisibility = true}); //Constructor
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -45,23 +49,29 @@ class MainButtons extends StatelessWidget {
                 ],
               ),
             )),
-        Container(
-          alignment: Alignment.center,
+        Visibility(
           child: Container(
-              height: 80,
-              width: 80,
-              child: FittedBox(
-                  child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ClientCreateRequest()));
-                },
-                backgroundColor: Color(0xFFA5A6F6),
-                child: Icon(Icons.build, color: Colors.white, size: 40),
-              ))),
-        )
+            alignment: Alignment.center,
+            child: Container(
+                height: 80,
+                width: 80,
+                child: FittedBox(
+                    child: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ClientCreateRequest()));
+                  },
+                  backgroundColor: Color(0xFFA5A6F6),
+                  child: Icon(Icons.build, color: Colors.white, size: 40),
+                ))),
+          ),
+          maintainSize: true,
+          maintainAnimation: true,
+          maintainState: true,
+          visible: wrenchVisibility,
+        ),
       ],
     );
   }

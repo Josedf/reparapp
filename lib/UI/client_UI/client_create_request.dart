@@ -20,8 +20,8 @@ class _CreateRequestState extends State<ClientCreateRequest> {
     // TODO: implement build
     return SafeArea(
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,10 +35,13 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text("Back", style: TextStyle(color: Color(0xFFA5A6F6))))),
+                      child: Text("Back",
+                          style: TextStyle(color: Color(0xFFA5A6F6))))),
               Padding(
                 padding: EdgeInsets.only(left: 30),
-                child: Text("Create Request", style: TextStyle(fontSize: 30)),
+                child: Text("Create Request",
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
               )
             ],
           ),
@@ -89,7 +92,10 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                     padding: EdgeInsets.all(8.0),
                     child: TextButton(
                         onPressed: () {},
-                        child: Text("Add your photos or videos here", style: TextStyle(color: Colors.black),)),
+                        child: Text(
+                          "Add your photos or videos here",
+                          style: TextStyle(color: Colors.black),
+                        )),
                   ))),
           Padding(
               padding: EdgeInsets.all(10),

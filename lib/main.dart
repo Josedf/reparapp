@@ -17,10 +17,10 @@ import 'firebase/firebase_central.dart';
 void main() {
   // this is the key
   WidgetsFlutterBinding.ensureInitialized();
-   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
- ));
- SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+  ));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   runApp(MyApp());
 }
 
@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFE8E9FC), fontFamily: 'Inder'),
+      theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xFFE8E9FC),
+          fontFamily: 'Inder'),
       routes: {
         '/loginClient': (context) => const ClientLogIn(),
         '/signupFixer': (context) => const FixerSignUp(),
