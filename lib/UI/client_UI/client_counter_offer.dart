@@ -85,7 +85,7 @@ class _CounterOfferState extends State<ClientCounterOffer> {
           Padding(
               padding: const EdgeInsets.only(top: 17.5),
               child: MainButtons(
-                mainVisibility: false,
+                wrenchVisibility: false,
               ))
         ],
       ),

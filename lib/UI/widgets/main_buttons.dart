@@ -61,7 +61,7 @@ class MainButtons extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ClientCounterOffer()));
+                            builder: (context) => ClientCreateRequest()));
                   },
                   backgroundColor: Color(0xFFA5A6F6),
                   child: Icon(Icons.build, color: Colors.white, size: 40),
