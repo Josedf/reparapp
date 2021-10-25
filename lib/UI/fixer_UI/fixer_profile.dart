@@ -6,6 +6,7 @@ import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_signup.dart';
+import 'package:reparapp/UI/widgets/main_buttons.dart';
 
 class FixerProfile extends StatefulWidget {
   const FixerProfile({Key? key}) : super(key: key);
@@ -55,17 +56,13 @@ class _ProfilePageState extends State<FixerProfile> {
         extendBodyBehindAppBar: false,
         body: Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               widgetProfilePhoto(),
-              Text(""),
               Center(
                 child: Text("Fixer Name",
                     style: TextStyle(fontFamily: 'Inder', fontSize: 30)),
               ),
-              Text(""),
-              Text(""),
-              Text(""),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -77,8 +74,6 @@ class _ProfilePageState extends State<FixerProfile> {
                   ),
                 ],
               ),
-              Text(""),
-              Text(""),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -90,8 +85,6 @@ class _ProfilePageState extends State<FixerProfile> {
                   ),
                 ],
               ),
-              Text(""),
-              Text(""),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -103,37 +96,8 @@ class _ProfilePageState extends State<FixerProfile> {
                   ),
                 ],
               ),
-              Text(""),
-              Text(""),
-              Text(""),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Icon(Icons.chat, size: 60),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FixerEditProfile()));
-                    },
-                    child: Icon(Icons.edit, size: 60),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                ],
-              ),
+              MainButtons(
+                  wrenchVisibility: false, isProfile: true, isFixer: true)
             ],
           ),
         ));

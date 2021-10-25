@@ -154,7 +154,7 @@ class _ProfilePageState extends State<ClientProfile> {
                   ),
                 ],
               ),
-              MainButtons()
+              MainButtons(isProfile: true)
             ],
           ),
         ));

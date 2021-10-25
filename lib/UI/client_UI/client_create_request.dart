@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:reparapp/UI/client_UI/client_map.dart';
 
 class ClientCreateRequest extends StatefulWidget {
   const ClientCreateRequest({Key? key}) : super(key: key);
@@ -98,7 +99,10 @@ class _CreateRequestState extends State<ClientCreateRequest> {
           Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => ClientMap()));
+                },
                 child: Text("Set Location",
                     style: TextStyle(fontSize: 16, color: Color(0xFF7879F1))),
                 minWidth: double.maxFinite,
@@ -107,7 +111,9 @@ class _CreateRequestState extends State<ClientCreateRequest> {
           Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: Text("Send",
                     style: TextStyle(fontSize: 16, color: Colors.white)),
                 minWidth: double.maxFinite,

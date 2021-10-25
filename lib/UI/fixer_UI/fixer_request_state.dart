@@ -60,7 +60,7 @@ class FixerRequestState extends State<FixerRequest> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 30),
+            padding: EdgeInsets.only(top: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

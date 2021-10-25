@@ -10,18 +10,16 @@ class ClientMap extends StatefulWidget {
 
 class _MyAppState extends State<ClientMap> {
   final _initialCameraPosition =
-      CameraPosition(target: LatLng(10.786949, -74.753222));
+      CameraPosition(target: LatLng(10.786949, -74.753222), zoom: 12);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
-        ),
-        body: GoogleMap(initialCameraPosition: _initialCameraPosition),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Maps Sample App'),
+        backgroundColor: Color(0xFF7879F1),
       ),
+      body: GoogleMap(initialCameraPosition: _initialCameraPosition),
     );
   }
 }

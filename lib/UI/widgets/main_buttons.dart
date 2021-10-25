@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
+import 'package:reparapp/UI/client_UI/client_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_edit_profile.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 
 class MainButtons extends StatelessWidget {
   bool wrenchVisibility;
-  MainButtons({this.wrenchVisibility = true}); //Constructor
+  bool isProfile;
+  bool isFixer;
+  MainButtons(
+      {this.wrenchVisibility = true,
+      this.isProfile = false,
+      this.isFixer = false}); //Constructor
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +42,36 @@ class MainButtons extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ClientEditProfile()));
-                    },
-                    child: Icon(Icons.edit, size: 40),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0)),
-                    ),
-                  )),
+                      child: isProfile
+                          ? ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => isFixer
+                                            ? FixerEditProfile()
+                                            : ClientEditProfile()));
+                              },
+                              child: Icon(Icons.edit, size: 40),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF7879F1),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0)),
+                              ),
+                            )
+                          : ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    isFixer ? '/profileFixer' : '/profile',
+                                    (Route<dynamic> route) => false);
+                              },
+                              child: Icon(Icons.account_box, size: 40),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF7879F1),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0)),
+                              ),
+                            )),
                 ],
               ),
             )),

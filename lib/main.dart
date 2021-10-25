@@ -40,7 +40,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loginClient': (context) => const ClientLogIn(),
         '/signupFixer': (context) => const FixerSignUp(),
-        '/loginFixer': (context) => const FixerLogIn()
+        '/loginFixer': (context) => const FixerLogIn(),
+        '/profile': (context) => const ClientProfile(),
+        '/profileFixer': (context) => const FixerProfile()
       },
       home: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 //return GoogleCentral();
-                return FixerRequest();
+                return FirebaseCentral();
               }
 
               return Loading();

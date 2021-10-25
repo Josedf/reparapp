@@ -57,7 +57,9 @@ class _ProfilePageState extends State<FixerEditProfile> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text("Cancel"),
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF7879F1),
@@ -68,7 +70,9 @@ class _ProfilePageState extends State<FixerEditProfile> {
                   ),
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: Text("Accept"),
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF7879F1),
