@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/client_UI/client_login.dart';
 
 class ClientSignUp extends StatefulWidget {
   const ClientSignUp({Key? key}) : super(key: key);
@@ -26,29 +27,43 @@ class _LoginPageState extends State<ClientSignUp> {
     super.initState();
   }
 
+  _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> _signup(BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: "c@c.com", password: "123456");
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
 
       final _firestore = FirebaseFirestore.instance;
       _firestore.collection("users").add({
-        "email": "c@c.com",
+        "email": emailController.text,
         "type": "client",
-        "name": "Jose Fernandez",
-        "phone": "3011234567",
-        "address": "Cra xx # xx",
-        "city": "Barranquilla",
+        "name": nameController.text,
+        "phone": phoneController.text,
+        "address": addressController.text,
+        "city": dropdownValue,
       });
-
+      _logout();
       Navigator.of(context).pop();
+      //Navigator.of(context).pop();
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => ClientLogIn()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => ClientLogIn()));
     }
   }
 
@@ -144,9 +159,12 @@ class _LoginPageState extends State<ClientSignUp> {
                         },
                         items: <String>[
                           'Select your city',
-                          'Two',
-                          'Free',
-                          'Four'
+                          'Barranquilla',
+                          'Cartagena',
+                          'Santa Marta',
+                          'Valledupar',
+                          'Medellín',
+                          'Bogotá',
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,

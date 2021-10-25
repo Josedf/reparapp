@@ -30,8 +30,8 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
         if (user != null) {
           getUsers(user.email);
           if (val) {
-            //return FirebaseFixerLogged();
-            return FixerRequest();
+            return FirebaseFixerLogged();
+            //return FixerRequest();
           } else {
             return ClientProfile();
           }

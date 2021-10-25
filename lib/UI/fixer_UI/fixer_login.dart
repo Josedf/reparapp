@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
 import 'fixer_signup.dart';
 
-
 class FixerLogIn extends StatefulWidget {
   const FixerLogIn({Key? key}) : super(key: key);
 
@@ -16,7 +15,8 @@ class _LoginPageState extends State<FixerLogIn> {
   _login() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: "c2@c.com", password: "123456");
+          .signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");
@@ -108,17 +108,16 @@ class _LoginPageState extends State<FixerLogIn> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FixerSignUp()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FixerSignUp()));
                   },
                   child: Text("Don't have an account? Sign up as fixer",
                       style:
                           TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil('/loginClient', (Route<dynamic> route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/loginClient', (Route<dynamic> route) => false);
                   },
                   child: Text("Back to login as a client",
                       style:
