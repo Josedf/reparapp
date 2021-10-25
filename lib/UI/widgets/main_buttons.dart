@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/client_UI/client_chats_view.dart';
+import 'package:reparapp/UI/client_UI/client_chats_view.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
 import 'package:reparapp/UI/client_UI/client_profile.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_chats_view.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_chats_view.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_profile.dart';
@@ -32,7 +36,14 @@ class MainButtons extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => isFixer
+                                    ? FixerChatsView()
+                                    : ClientChatsView()));
+                      },
                       child: Icon(Icons.chat, size: 40),
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF7879F1),

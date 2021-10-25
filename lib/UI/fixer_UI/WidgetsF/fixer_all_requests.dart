@@ -106,7 +106,7 @@ class FixerAllRequests extends StatelessWidget {
             ),
           ),
         ),
-        MainButtons()
+        MainButtons(wrenchVisibility: false, isFixer: false)
       ],
     );
   }

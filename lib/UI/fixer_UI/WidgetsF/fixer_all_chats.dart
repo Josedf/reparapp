@@ -118,7 +118,7 @@ class FixerAllChats extends StatelessWidget {
             ),
           ),
         ),
-        MainButtons()
+        MainButtons(wrenchVisibility: false, isFixer: false)
       ],
     );
   }
