@@ -38,6 +38,13 @@ dependencies:
   firebase_auth: 
   flutter_signin_button:
   cloud_firestore:
+  flutter_chat_ui: ^1.4.4
+  file_picker: ^4.1.1
+  image_picker: ^0.8.4+2
+  intl: ^0.17.0
+  mime: ^1.0.0
+  open_file: ^3.2.1
+  uuid: ^3.0.4
 
 
 
@@ -57,6 +64,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - lib/UI/client_UI/images/
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
