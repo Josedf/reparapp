@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 
 class FixerRequest extends StatefulWidget {
@@ -52,8 +53,9 @@ class FixerRequestState extends State<FixerRequest> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
+    return SafeArea(
+        child: Scaffold(
+            body: Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -111,7 +113,10 @@ class FixerRequestState extends State<FixerRequest> {
                     padding: EdgeInsets.only(top: 10),
                     child: ElevatedButton(
                       onPressed: () {
-                        //_login();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FixerSetOffer()));
                       },
                       child: Text("Check Offer",
                           style: TextStyle(fontSize: 16, color: Colors.white)),
@@ -132,6 +137,6 @@ class FixerRequestState extends State<FixerRequest> {
           )
         ],
       ),
-    ));
+    )));
   }
 }

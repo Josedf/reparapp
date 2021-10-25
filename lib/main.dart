@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 //return GoogleCentral();
-                return FirebaseCentral();
+                return FixerRequest();
               }
 
               return Loading();

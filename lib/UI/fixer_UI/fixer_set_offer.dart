@@ -67,7 +67,7 @@ class _SetOfferState extends State<FixerSetOffer> {
             padding: EdgeInsets.only(top: 300),
             child: ElevatedButton(
               onPressed: () {
-                //_login();
+                Navigator.pop(context);
               },
               child: Text("Set Offer",
                   style: TextStyle(fontSize: 16, color: Colors.white)),
