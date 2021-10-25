@@ -39,9 +39,7 @@ class _LoginPageState extends State<ClientLogIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
+    return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -122,22 +120,10 @@ class _LoginPageState extends State<ClientLogIn> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FixerLogIn()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FixerLogIn()));
                   },
                   child: Text("Are you fixer? Log In",
-                      style:
-                          TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FixerSignUp()));
-                  },
-                  child: Text("Don't have an account? Sign up as fixer",
                       style:
                           TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
               TextButton(
@@ -152,6 +138,6 @@ class _LoginPageState extends State<ClientLogIn> {
                           TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
             ],
           ),
-        ));
+        );
   }
 }
