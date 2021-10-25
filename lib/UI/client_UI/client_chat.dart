@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.pink,
       ),
-      home: ChatsView(),
+      home: ClientChatsView(),
     );
   }
 }
