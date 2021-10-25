@@ -58,7 +58,7 @@ class FixerRequestState extends State<FixerRequest> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 75),
+            padding: EdgeInsets.only(top: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -87,7 +87,7 @@ class FixerRequestState extends State<FixerRequest> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                    padding: EdgeInsets.only(top: 50),
+                    padding: EdgeInsets.only(top: 20),
                     child: Text("Mi computador no funciona",
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold))),
@@ -108,7 +108,7 @@ class FixerRequestState extends State<FixerRequest> {
                         style:
                             TextStyle(fontSize: 16, color: Color(0xFF666666)))),
                 Padding(
-                    padding: EdgeInsets.only(top: 25),
+                    padding: EdgeInsets.only(top: 10),
                     child: ElevatedButton(
                       onPressed: () {
                         //_login();
