@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/fixer_UI/WidgetsF/fixer_all_chats.dart';
 
-import 'WidgetsC/client_ all_offers.dart';
-import 'WidgetsC/client_all_chats.dart';
-
-
-
+import 'WidgetsF/fixer_all_requests.dart';
 
 class ChatsView extends StatefulWidget {
   @override
@@ -17,7 +14,7 @@ class _ChatsViewState extends State<ChatsView> {
 
   final Map<int, Widget> ChatsWidgets = <int, Widget>{
     0: buildSegments('Chats'),
-    1: buildSegments('Offers'),
+    1: buildSegments('Requests'),
   };
 
   static Widget buildSegments(String text) => Container(
@@ -25,11 +22,9 @@ class _ChatsViewState extends State<ChatsView> {
         child: Text(text, style: TextStyle(fontSize: 15)),
       );
 
-
-
   List<Widget> bodies = [
-    ClientAllChats(),
-    ClientAllOffers(),
+    FixerAllChats(),
+    FixerAllRequests(),
   ];
 
   @override
