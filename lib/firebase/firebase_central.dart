@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
 import 'package:reparapp/UI/client_UI/client_profile.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/firebase/firebase_fixer_logged.dart';
 
 import 'firebase_client_logged.dart';
@@ -29,7 +30,8 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
         if (user != null) {
           getUsers(user.email);
           if (val) {
-            return FirebaseFixerLogged();
+            //return FirebaseFixerLogged();
+            return FixerRequest();
           } else {
             return ClientProfile();
           }
