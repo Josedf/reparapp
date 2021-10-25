@@ -39,9 +39,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                           style: TextStyle(color: Color(0xFFA5A6F6))))),
               Padding(
                 padding: EdgeInsets.only(left: 30),
-                child: Text("Create Request",
-                    style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                child: Text("Create Request", style: TextStyle(fontSize: 30)),
               )
             ],
           ),

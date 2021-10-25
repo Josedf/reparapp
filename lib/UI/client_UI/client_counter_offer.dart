@@ -17,14 +17,12 @@ final offerController = TextEditingController();
 class _CounterOfferState extends State<ClientCounterOffer> {
   @override
   Widget build(BuildContext context) {
-    // double width = MediaQuery.of(context).size.width;
-    String dropdownValue = 'Select your category';
-    // TODO: implement build
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
@@ -82,11 +80,9 @@ class _CounterOfferState extends State<ClientCounterOffer> {
               ),
             ),
           ),
-          Padding(
-              padding: const EdgeInsets.only(top: 17.5),
-              child: MainButtons(
-                wrenchVisibility: false,
-              ))
+          MainButtons(
+            wrenchVisibility: false,
+          )
         ],
       ),
     ));

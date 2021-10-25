@@ -1,10 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_profile_fixer.dart';
 
 import 'package:flutter/services.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
 
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 
 import 'UI/client_UI/client_login.dart';
 import 'UI/client_UI/client_map.dart';
