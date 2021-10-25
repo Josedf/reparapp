@@ -7,12 +7,12 @@ import 'WidgetsC/client_all_chats.dart';
 
 
 
-class ChatsView extends StatefulWidget {
+class ClientChatsView extends StatefulWidget {
   @override
-  _ChatsViewState createState() => _ChatsViewState();
+  _ClientChatsViewState createState() => _ClientChatsViewState();
 }
 
-class _ChatsViewState extends State<ChatsView> {
+class _ClientChatsViewState extends State<ClientChatsView> {
   int groupValue = 0;
 
   final Map<int, Widget> ChatsWidgets = <int, Widget>{

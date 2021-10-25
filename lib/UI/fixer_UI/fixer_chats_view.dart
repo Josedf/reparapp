@@ -4,12 +4,12 @@ import 'package:reparapp/UI/fixer_UI/WidgetsF/fixer_all_chats.dart';
 
 import 'WidgetsF/fixer_all_requests.dart';
 
-class ChatsView extends StatefulWidget {
+class FixerChatsView extends StatefulWidget {
   @override
-  _ChatsViewState createState() => _ChatsViewState();
+  _FixerChatsViewState createState() => _FixerChatsViewState();
 }
 
-class _ChatsViewState extends State<ChatsView> {
+class _FixerChatsViewState extends State<FixerChatsView> {
   int groupValue = 0;
 
   final Map<int, Widget> ChatsWidgets = <int, Widget>{
