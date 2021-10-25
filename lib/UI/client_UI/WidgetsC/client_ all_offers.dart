@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reparapp/Models/Message.dart';
-import 'package:reparapp/UI/client_UI/client_message.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 
-class AllChats extends StatelessWidget {
+class ClientAllOffers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,13 +26,7 @@ class AllChats extends StatelessWidget {
                   itemCount: clientChats.length,
                   itemBuilder: (BuildContext context, int index) {
                     final Message userChat = clientChats[index];
-                    return GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ClientMessage(user: userChat.sender),
-                        ),
-                      ),
+                    return Container(
                       child: Container(
                         margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
                         decoration: BoxDecoration(
@@ -45,23 +38,27 @@ class AllChats extends StatelessWidget {
                             bottomRight: Radius.circular(20.0),
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
                               children: <Widget>[
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   //or 15.0
+
                                   child: Container(
-                                    height: 70.0,
-                                    width: 70.0,
+                                    height: 130.0,
+                                    width: 382.0,
                                     color: Colors.white,
                                     child: Image.asset(userChat.sender.ppic,
-                                        width: 70, height: 70),
+                                        width: 357, height: 130),
                                   ),
                                 ),
-                                SizedBox(width: 10.0),
+                              ],
+                            ),
+                            Column(
+                              children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -85,30 +82,21 @@ class AllChats extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
+                                    Text(userChat.time,
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.6))),
                                   ],
                                 ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(userChat.time,
-                                    style: TextStyle(
-                                        color: Colors.black.withOpacity(0.6))),
                                 Container(
                                     width: 40.0,
-                                    height: 20.0,
+                                    height: 35.0,
                                     alignment: Alignment.bottomRight,
                                     child: Icon(
-                                      Icons.keyboard_arrow_right_rounded,
+                                      Icons.keyboard_arrow_up_rounded,
                                       color: Color(0xFFA5A6F6),
                                     ))
                               ],
-                            ),
-                            Divider(
-                              height: 85,
-                              thickness: 5,
-                              indent: 8,
-                              endIndent: 8,
                             ),
                           ],
                         ),
