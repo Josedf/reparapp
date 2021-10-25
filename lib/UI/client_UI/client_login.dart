@@ -17,7 +17,8 @@ class _LoginPageState extends State<ClientLogIn> {
   _login() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: "c@c.com", password: "123456");
+          .signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");

@@ -26,28 +26,39 @@ class _LoginPageState extends State<FixerSignUp> {
     super.initState();
   }
 
+  _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> _signup(BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: "c2@c.com", password: "123456");
+              email: emailController.text, password: passwordController.text);
 
       final _firestore = FirebaseFirestore.instance;
       _firestore.collection("users").add({
-        "email": "c2@c.com",
+        "email": emailController.text,
         "type": "fixer",
+        "phone": phoneController.text,
+        "category": dropdownValue,
       });
-
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FixerLogIn()));
+      _logout();
+      Navigator.of(context).pop();
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => FixerLogIn()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FixerLogIn()));
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => FixerLogIn()));
     }
   }
 
@@ -143,9 +154,10 @@ class _LoginPageState extends State<FixerSignUp> {
                         },
                         items: <String>[
                           'Select your category',
-                          'Two',
-                          'Free',
-                          'Four'
+                          'Computadores',
+                          'Enfriamiento',
+                          'Plomería',
+                          'abanicos',
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
