@@ -44,9 +44,44 @@ class _ProfilePageState extends State<FixerEditProfile> {
     );
   }
 
-  // void updateinfo(datos en textfields) async {
-
-  // }
+  Widget mainButtons() {
+    return Stack(
+      children: [
+        Container(
+            height: 95,
+            alignment: AlignmentDirectional.bottomStart,
+            child: Container(
+              height: 60,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Cancel"),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF7879F1),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Accept"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF7879F1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                    ),
+                  )),
+                ],
+              ),
+            )),
+      ],
+    );
+  }
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -79,7 +114,6 @@ class _ProfilePageState extends State<FixerEditProfile> {
                     style: TextStyle(fontFamily: 'Inder', fontSize: 20)),
               ),
               widgetProfilePhoto(),
-              Text(""),
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 child: TextFormField(
@@ -132,45 +166,17 @@ class _ProfilePageState extends State<FixerEditProfile> {
                       labelText: 'Write your new Phone'),
                 ),
               ),
-              Text(""),
-              MaterialButton(
-                onPressed: () {},
-                child: Text("Upload new certificate",
-                    style: TextStyle(fontSize: 16, color: Color(0xFF7879F1))),
-                minWidth: double.maxFinite,
-                color: Color(0x9FFFFFFF),
+              Padding(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: MaterialButton(
+                  onPressed: () {},
+                  child: Text("Upload new certificate",
+                      style: TextStyle(fontSize: 16)),
+                  minWidth: double.maxFinite,
+                  color: Color(0x9FFFFFFF),
+                ),
               ),
-              Text(""),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Accept",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Cancel",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF7879F1),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
-                  ),
-                ],
-              ),
-              Text(""),
+              mainButtons(),
             ],
           ),
         ));

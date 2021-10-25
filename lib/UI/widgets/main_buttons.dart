@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_create_request.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 
 class MainButtons extends StatelessWidget {
   bool wrenchVisibility;
