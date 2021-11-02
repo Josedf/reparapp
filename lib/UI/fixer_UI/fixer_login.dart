@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
+import 'package:reparapp/domain/controller/firestore_controller.dart';
 import 'fixer_signup.dart';
 
 class FixerLogIn extends StatefulWidget {
@@ -12,11 +14,32 @@ class FixerLogIn extends StatefulWidget {
 }
 
 class _LoginPageState extends State<FixerLogIn> {
+  _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   _login() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+      FirestoreController _firestoreController = Get.find();
+
+      _firestoreController
+          .isFixer(emailController.text, passwordController.text, "fixer")
+          .then((value) {
+        if (value == false) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text(
+                    'You are not a fixer, please press the login as fixer button')),
+          );
+        }
+      });
+      // UserCredential userCredential = await FirebaseAuth.instance
+      //     .signInWithEmailAndPassword(
+      //         email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");

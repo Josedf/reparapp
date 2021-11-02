@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_signup.dart';
+import 'package:reparapp/domain/controller/firestore_controller.dart';
 import 'client_signup.dart';
 //import 'package:get/get.dart';
 
@@ -14,11 +16,33 @@ class ClientLogIn extends StatefulWidget {
 }
 
 class _LoginPageState extends State<ClientLogIn> {
+  _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   _login() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+      FirestoreController _firestoreController = Get.find();
+
+      _firestoreController
+          .isFixer(emailController.text, passwordController.text, "client")
+          .then((value) {
+        if (value == false) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text(
+                    'You are not a client, please login in the other view')),
+          );
+        }
+      });
+
+      // UserCredential userCredential = await FirebaseAuth.instance
+      //     .signInWithEmailAndPassword(
+      //         email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_profile_fixer.dart';
 
@@ -9,6 +10,7 @@ import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 import 'UI/client_UI/client_login.dart';
 import 'UI/client_UI/client_map.dart';
@@ -16,9 +18,12 @@ import 'UI/client_UI/client_profile.dart';
 import 'UI/fixer_UI/fixer_edit_profile.dart';
 import 'UI/fixer_UI/fixer_profile.dart';
 import 'UI/fixer_UI/fixer_signup.dart';
+import 'domain/controller/firestore_controller.dart';
 import 'firebase/firebase_central.dart';
 
 void main() {
+  Get.lazyPut<FirestoreService>(() => FirestoreService());
+  Get.lazyPut<FirestoreController>(() => FirestoreController());
   // this is the key
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
