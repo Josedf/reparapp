@@ -43,4 +43,26 @@ class FirestoreService {
     }
     return "x";
   }
+
+  Future<Map<String, String>> getUser(String email) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore.collection("users").where("email", isEqualTo: email);
+
+    Map<String, String> map = {};
+    QuerySnapshot users = await sRef.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        map = {
+          "address": doc["address"],
+          "name": doc["name"],
+          "phone": doc["phone"],
+          "type": doc["type"],
+          "city": doc["city"]
+        };
+        return map;
+      }
+    }
+
+    return {};
+  }
 }
