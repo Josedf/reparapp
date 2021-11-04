@@ -199,7 +199,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                       )),
                   if (imageSelected)
                     Card(
-                        color: Color(0xFFF6F6F6),
+                        color: Color(0xFFA5A6F6),
                         child: Padding(
                           padding: EdgeInsets.all(2.0),
                           child: TextButton(
@@ -213,7 +213,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                               },
                               child: Text(
                                 "See images here",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(color: Colors.white),
                               )),
                         )),
                 ],
