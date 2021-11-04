@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +30,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
   final ImagePicker _picker = ImagePicker(); //Pick image
   Image? image; //Image selected
   String img64String = ""; //Image in base64
-  List<String> img64List = []; //List of images in base64
+  List<String> image64List = []; //List of images in base64
 
   //TextEditingController _passwordController = new TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
@@ -47,23 +46,42 @@ class _CreateRequestState extends State<ClientCreateRequest> {
     'Computadores',
   ];
 
-  Future<void> _createRequest() async {
-    if (dropdownValue == DROP_DEFAULT) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select a category"),
-          backgroundColor: Colors.red,
-        ),
-      );
-      /* Get.snackbar('Error', 'Selecciona una categoría',
+  Future<bool> _createRequest() async {
+    print("Descripción: " + _descriptionController.text);
+    if (_descriptionController.text == "" ||
+        _descriptionController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a description',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFF808080),
           colorText: Colors.white,
           borderRadius: 10,
           margin: EdgeInsets.all(10),
           snackStyle: SnackStyle.FLOATING,
-          duration: Duration(seconds: 3));*/
-      return;
+          duration: Duration(seconds: 3));
+      return false;
+    }
+    if (dropdownValue == DROP_DEFAULT) {
+      Get.snackbar('Error', 'Please select a category',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (image64List.isEmpty) {
+      Get.snackbar('Error', 'Please select an image',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
     }
     final _firestore = FirebaseFirestore.instance;
     String email = user!.email.toString();
@@ -73,7 +91,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
     Map<String, String> current_user = await _firestoreService.getUser(email);
     if (current_user == {} || current_user == null) {
       print("User not found");
-      return;
+      return false;
     }
     //print(current_user["name"]);
     try {
@@ -82,13 +100,17 @@ class _CreateRequestState extends State<ClientCreateRequest> {
         "phone": current_user["phone"],
         "address": current_user["address"],
         "city": current_user["city"],
+        "description": _descriptionController.text,
         "category": dropdownValue,
         "img64": img64String
       });
+
       print("Request created succesfully");
+      return true;
     } catch (e) {
       print("error" + e.toString());
     }
+    return false;
   }
 
 // Image Picker
@@ -102,7 +124,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
     }
     img64String = "";
     setState(() {
-      //Go through imageFile2
+      //Go through the images array
       for (var i = 0; i < images.length; i++) {
         File file = File(images[i].path);
         img64String += base64Encode(file.readAsBytesSync());
@@ -110,7 +132,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
           img64String += ",";
         }
       }
-      img64List = img64String.split(",");
+      image64List = img64String.split(",");
       /* final file = File(imageFile2!.path);
       // image = Image.file(File(imageFile!.path)); Guarda archivo tipo image
       final bytes = file.readAsBytesSync(); //Convertir a bytes
@@ -208,7 +230,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ClientImages(
-                                              image64List: img64List,
+                                              image64List: image64List,
                                             )));
                               },
                               child: Text(
@@ -234,7 +256,23 @@ class _CreateRequestState extends State<ClientCreateRequest> {
               padding: EdgeInsets.all(10),
               child: MaterialButton(
                 onPressed: () {
-                  _createRequest();
+                  Future<bool> response = _createRequest();
+                  response.then((isSuccessful) {
+                    if (isSuccessful) {
+                      Get.back();
+                      print("Success");
+                      Get.snackbar('Success', 'Request created successfully',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Color(0xFFA5A6F6),
+                          colorText: Colors.white,
+                          borderRadius: 10,
+                          margin: EdgeInsets.all(10),
+                          snackStyle: SnackStyle.FLOATING,
+                          duration: Duration(seconds: 3));
+                    }
+                  });
+
+                  //   Get.back(); //Primero el back , luego mostrar el snackbar.
                 },
                 child: Text("Send",
                     style: TextStyle(fontSize: 16, color: Colors.white)),
