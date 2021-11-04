@@ -11,6 +11,7 @@ import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
+import 'package:reparapp/firebase/firebase_central.dart';
 
 class MainButtons extends StatelessWidget {
   bool wrenchVisibility;
@@ -71,10 +72,18 @@ class MainButtons extends StatelessWidget {
                               ),
                             )
                           : ElevatedButton(
+                              // onPressed: () {
+                              //   Navigator.of(context).pushNamedAndRemoveUntil(
+                              //       isFixer ? '/profileFixer' : '/profile',
+                              //       (Route<dynamic> route) => false);
+                              // },
                               onPressed: () {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    isFixer ? '/profileFixer' : '/profile',
-                                    (Route<dynamic> route) => false);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => isFixer
+                                            ? FixerProfile()
+                                            : FirebaseCentral()));
                               },
                               child: Icon(Icons.account_box, size: 40),
                               style: ElevatedButton.styleFrom(

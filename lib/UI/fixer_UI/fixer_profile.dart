@@ -21,6 +21,14 @@ class _ProfilePageState extends State<FixerProfile> {
     super.initState();
   }
 
+  _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   Widget widgetProfilePhoto() {
     return Container(
       color: Colors.white,
@@ -49,7 +57,7 @@ class _ProfilePageState extends State<FixerProfile> {
           leading: BackButton(
             color: Colors.white,
             onPressed: () {
-              Navigator.of(context).pop();
+              _logout();
             },
           ),
         ),

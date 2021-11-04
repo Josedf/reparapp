@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
+import 'package:reparapp/domain/controller/firestore_controller.dart';
 import 'fixer_signup.dart';
 
 class FixerLogIn extends StatefulWidget {
@@ -12,27 +14,88 @@ class FixerLogIn extends StatefulWidget {
 }
 
 class _LoginPageState extends State<FixerLogIn> {
-  _login() async {
+  Future<bool> _login() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+      if (emailController.text != "" || passwordController.text != "") {
+        FirestoreController _firestoreController = Get.find();
+
+        _firestoreController
+            .isFixer(emailController.text, passwordController.text, "fixer")
+            .then((value) {
+          if (value == "incorrect") {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text(
+                      'You are not a fixer, please login in the initial login view')),
+            );
+            return Future.value(false);
+          } else {
+            if (value == "invalid-email") {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("invalid email")),
+              );
+              return Future.value(false);
+            } else {
+              if (value == "wrong-password") {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("wrong password")),
+                );
+                return Future.value(false);
+              } else {
+                if (value == "user-not-found") {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("user not found")),
+                  );
+                  return Future.value(false);
+                } else {
+                  printInfo(info: "entra");
+                  logged = true;
+                  return Future.value(true);
+                }
+              }
+            }
+          }
+        });
+        return Future.value(false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter your user and password')),
+        );
+        return Future.value(false);
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");
+        Get.snackbar(
+          'User not found',
+          'Error',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+        );
+        return Future.value(false);
       } else if (e.code == 'wrong-password') {
         print("wrong-password");
+        Get.snackbar(
+          'wrong-password',
+          'Error',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+        );
+        return Future.value(false);
       }
+      return Future.value(false);
     }
   }
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool logged = false;
   bool _isObscure = true;
 
   @override
   void initState() {
     _isObscure = true;
+    logged = false;
     super.initState();
   }
 
@@ -92,8 +155,16 @@ class _LoginPageState extends State<FixerLogIn> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        // _login().then((value) {
+                        //   printInfo(info: value.toString());
+                        //   if (value) {
+                        //     Navigator.of(context).pop();
+                        //   }
+                        // });
                         _login();
-                        Navigator.of(context).pop();
+                        if (logged) {
+                          Navigator.of(context).pop();
+                        }
                       },
                       child: Text("Log In",
                           style: TextStyle(fontSize: 16, color: Colors.white)),
