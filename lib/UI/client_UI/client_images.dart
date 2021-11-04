@@ -19,8 +19,9 @@ class ClientImages extends StatelessWidget {
   bool imageSelected = false;
   final ImagePicker _picker = ImagePicker(); //Pick image
   Image? image; //Image selected
-  String img64; //Image in base64
-  ClientImages({this.img64 = ""});
+  List<String> image64List; //Image in base64
+  ClientImages({this.image64List = const []});
+
 // Image Picker
 
 //get image from gallery    //  Image Picker
@@ -67,7 +68,6 @@ class ClientImages extends StatelessWidget {
   }
 
   Widget slideshow() {
-    final List<String> imageList = img64.split(",");
     //Slideshow con mocks
     return Center(
         child: CarouselSlider(
@@ -80,9 +80,9 @@ class ClientImages extends StatelessWidget {
         enableInfiniteScroll: false,
         autoPlay: false,
       ),
-      items: imageList
+      items: image64List
           .map((img64) => ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(15),
                 child: Stack(
                   children: <Widget>[decoder(img64)],
                 ),
