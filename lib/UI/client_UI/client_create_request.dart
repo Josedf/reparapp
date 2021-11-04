@@ -25,6 +25,7 @@ class ClientCreateRequest extends StatefulWidget {
 
 class _CreateRequestState extends State<ClientCreateRequest> {
   TextEditingController _descriptionController = new TextEditingController();
+  TextEditingController _titleController = new TextEditingController();
   bool imageSelected = false;
   final FirestoreService _firestoreService = Get.find();
   final ImagePicker _picker = ImagePicker(); //Pick image
@@ -48,6 +49,17 @@ class _CreateRequestState extends State<ClientCreateRequest> {
 
   Future<bool> _createRequest() async {
     print("Descripción: " + _descriptionController.text);
+    if (_titleController.text == "" || _titleController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a title for your request',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
     if (_descriptionController.text == "" ||
         _descriptionController.text.isEmpty) {
       Get.snackbar('Error', 'Please write a description',
@@ -100,9 +112,10 @@ class _CreateRequestState extends State<ClientCreateRequest> {
         "phone": current_user["phone"],
         "address": current_user["address"],
         "city": current_user["city"],
+        "title": _titleController.text,
         "description": _descriptionController.text,
         "category": dropdownValue,
-        "img64": img64String
+        "img64": img64String,
       });
 
       print("Request created succesfully");
@@ -167,7 +180,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -188,13 +201,26 @@ class _CreateRequestState extends State<ClientCreateRequest> {
           ),
           Padding(
               padding: EdgeInsets.all(10),
+              child: Text("Your request:", style: TextStyle(fontSize: 20))),
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Your request title'),
+              )),
+          Padding(
+              padding: EdgeInsets.all(10),
               child: Card(
                   color: Color(0xFFF6F6F6),
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextField(
                       controller: _descriptionController,
-                      maxLines: 12,
+                      maxLines: 7,
                       decoration: InputDecoration.collapsed(
                           hintText: "Post description here..."),
                     ),
