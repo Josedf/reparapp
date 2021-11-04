@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_map.dart';
 
 class ClientCreateRequest extends StatefulWidget {
@@ -34,7 +35,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                   alignment: Alignment.topCenter,
                   child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       child: Text("Back",
                           style: TextStyle(color: Color(0xFFA5A6F6))))),

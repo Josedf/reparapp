@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           scaffoldBackgroundColor: const Color(0xFFE8E9FC),
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const FirebaseCentral(),
         '/profileFixer': (context) => const FixerProfile()
       },
-      home: Scaffold(
+      home: SafeArea(child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: null,
           body: FutureBuilder(
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
               return Loading();
             },
           )),
-    );
+    ));
   }
 }
 

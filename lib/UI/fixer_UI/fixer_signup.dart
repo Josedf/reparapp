@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'fixer_login.dart';
 
 class FixerSignUp extends StatefulWidget {
@@ -203,7 +204,7 @@ class _LoginPageState extends State<FixerSignUp> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: Text("already have an account? Log in",
                       style:
