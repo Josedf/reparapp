@@ -1,10 +1,21 @@
+import 'dart:io';
+import 'dart:convert';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snack.dart';
+import 'package:reparapp/UI/client_UI/client_images.dart';
 import 'package:reparapp/UI/client_UI/client_map.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ClientCreateRequest extends StatefulWidget {
   const ClientCreateRequest({Key? key}) : super(key: key);
@@ -14,11 +25,119 @@ class ClientCreateRequest extends StatefulWidget {
 }
 
 class _CreateRequestState extends State<ClientCreateRequest> {
+  TextEditingController _descriptionController = new TextEditingController();
+  bool imageSelected = false;
+  final FirestoreService _firestoreService = Get.find();
+  final ImagePicker _picker = ImagePicker(); //Pick image
+  Image? image; //Image selected
+  String img64String = ""; //Image in base64
+  List<String> img64List = []; //List of images in base64
+
+  //TextEditingController _passwordController = new TextEditingController();
+  User? user = FirebaseAuth.instance.currentUser;
+  String dropdownValue = 'Select your category';
+  final DROP_DEFAULT = 'Select your category';
+
+  // To show Selected Item in Text.
+  String holder = '';
+
+  List<String> dropDownList = [
+    'Select your category',
+    'Enfriamiento',
+    'Computadores',
+  ];
+
+  Future<void> _createRequest() async {
+    if (dropdownValue == DROP_DEFAULT) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please select a category"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      /* Get.snackbar('Error', 'Selecciona una categoría',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));*/
+      return;
+    }
+    final _firestore = FirebaseFirestore.instance;
+    String email = user!.email.toString();
+    print("Selected " + dropdownValue);
+    print("Description " + _descriptionController.text);
+    print("Email " + email);
+    Map<String, String> current_user = await _firestoreService.getUser(email);
+    if (current_user == {} || current_user == null) {
+      print("User not found");
+      return;
+    }
+    //print(current_user["name"]);
+    try {
+      _firestore.collection("requests").add({
+        "name": current_user["name"],
+        "phone": current_user["phone"],
+        "address": current_user["address"],
+        "city": current_user["city"],
+        "category": dropdownValue,
+        "img64": img64String
+      });
+      print("Request created succesfully");
+    } catch (e) {
+      print("error" + e.toString());
+    }
+  }
+
+// Image Picker
+
+//get image from gallery    //  Image Picker
+  Future<void> _getImage() async {
+    //final imageFile = await _picker.pickImage(source: ImageSource.gallery);
+    final images = await _picker.pickMultiImage();
+    if (images == null) {
+      return;
+    }
+    img64String = "";
+    setState(() {
+      //Go through imageFile2
+      for (var i = 0; i < images.length; i++) {
+        File file = File(images[i].path);
+        img64String += base64Encode(file.readAsBytesSync());
+        if (i != images.length - 1) {
+          img64String += ",";
+        }
+      }
+      img64List = img64String.split(",");
+      /* final file = File(imageFile2!.path);
+      // image = Image.file(File(imageFile!.path)); Guarda archivo tipo image
+      final bytes = file.readAsBytesSync(); //Convertir a bytes
+      img64String = base64Encode(bytes); //Encode image a base64 string*/
+      // print(img64.substring(0, 100));// Imprime para ver los bytes en base64
+      // final decodedBytes = base64Decode(img64); //Decode base64 string a image
+      //image = Image.memory(decodedBytes);//Convertir bytes a image
+      imageSelected = true;
+    });
+  }
+
+  /* Future<void> _getImage() async {
+    file = await _picker.pickImage(source: ImageSource.gallery);
+    final path = file?.path;
+    final bytes = await File(path!).readAsBytes();
+
+    //print(image);
+    setState(() {
+      imageSelected = true;
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    User? user = FirebaseAuth.instance.currentUser;
 
-    String dropdownValue = 'Select your category';
     // TODO: implement build
     return SafeArea(
         child: Scaffold(
@@ -52,57 +171,59 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: TextField(
+                      controller: _descriptionController,
                       maxLines: 12,
                       decoration: InputDecoration.collapsed(
                           hintText: "Post description here..."),
                     ),
                   ))),
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              value: dropdownValue,
-              icon: const Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue = newValue!;
-                });
-              },
-              items: <String>['Select your category', 'Two', 'Free', 'Four']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
+          Padding(padding: EdgeInsets.all(15), child: dropDown()),
           Padding(
               padding: EdgeInsets.all(10),
-              child: Card(
-                  color: Color(0xFFF6F6F6),
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Add your photos or videos here",
-                          style: TextStyle(color: Colors.black),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Card(
+                      color: Color(0xFFF6F6F6),
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: TextButton(
+                            onPressed: () {
+                              _getImage();
+                            },
+                            child: Text(
+                              "Add your photos or videos here",
+                              style: TextStyle(color: Colors.black),
+                            )),
+                      )),
+                  if (imageSelected)
+                    Card(
+                        color: Color(0xFFF6F6F6),
+                        child: Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ClientImages(
+                                              image64List: img64List,
+                                            )));
+                              },
+                              child: Text(
+                                "See images here",
+                                style: TextStyle(color: Colors.black),
+                              )),
                         )),
-                  ))),
+                ],
+              )),
           Padding(
               padding: EdgeInsets.all(10),
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => ClientMap()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ClientMap()));
                 },
                 child: Text("Set Location",
                     style: TextStyle(fontSize: 16, color: Color(0xFF7879F1))),
@@ -113,15 +234,43 @@ class _CreateRequestState extends State<ClientCreateRequest> {
               padding: EdgeInsets.all(10),
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  _createRequest();
                 },
                 child: Text("Send",
                     style: TextStyle(fontSize: 16, color: Colors.white)),
                 minWidth: double.maxFinite,
                 color: Color(0xFF7879F1),
-              ))
+              )),
         ],
       ),
     ));
+  }
+
+  Widget dropDown() {
+    return Column(children: <Widget>[
+      DropdownButton<String>(
+        isExpanded: true,
+        value: dropdownValue,
+        icon: const Icon(Icons.arrow_downward),
+        iconSize: 24,
+        elevation: 16,
+        style: const TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          height: 2,
+          color: Colors.deepPurpleAccent,
+        ),
+        onChanged: ((String? data) {
+          setState(() {
+            dropdownValue = data!;
+          });
+        }),
+        items: dropDownList.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
+    ]);
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
+import 'package:reparapp/UI/client_UI/client_images.dart';
 import 'package:reparapp/UI/client_UI/client_profile_fixer.dart';
 
 import 'package:flutter/services.dart';
