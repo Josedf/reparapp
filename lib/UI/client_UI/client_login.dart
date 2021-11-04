@@ -26,28 +26,61 @@ class _LoginPageState extends State<ClientLogIn> {
 
   _login() async {
     try {
-      FirestoreController _firestoreController = Get.find();
+      if (emailController.text != "" || passwordController.text != "") {
+        FirestoreController _firestoreController = Get.find();
 
-      _firestoreController
-          .isFixer(emailController.text, passwordController.text, "client")
-          .then((value) {
-        if (value == false) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text(
-                    'You are not a client, please login in the other view')),
-          );
-        }
-      });
-
-      // UserCredential userCredential = await FirebaseAuth.instance
-      //     .signInWithEmailAndPassword(
-      //         email: emailController.text, password: passwordController.text);
+        _firestoreController
+            .isFixer(emailController.text, passwordController.text, "client")
+            .then((value) {
+          //printInfo(info: value);
+          if (value == "incorrect") {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text(
+                      'You are not a client, please press the login fixer button')),
+            );
+          } else {
+            if (value == "invalid-email") {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("invalid email")),
+              );
+            } else {
+              if (value == "wrong-password") {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("wrong password")),
+                );
+              } else {
+                if (value == "user-not-found") {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("user not found")),
+                  );
+                }
+              }
+            }
+          }
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter your user and password')),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");
+        Get.snackbar(
+          'User not found',
+          'Error',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+        );
       } else if (e.code == 'wrong-password') {
         print("wrong-password");
+        Get.snackbar(
+          'wrong-password',
+          'Error',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+        );
       }
     }
   }

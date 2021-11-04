@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
         '/loginClient': (context) => const ClientLogIn(),
         '/signupFixer': (context) => const FixerSignUp(),
         '/loginFixer': (context) => const FixerLogIn(),
-        '/profile': (context) => const ClientProfile(),
+        //'/profile': (context) => const ClientProfile(),
+        '/profile': (context) => const FirebaseCentral(),
         '/profileFixer': (context) => const FixerProfile()
       },
       home: Scaffold(

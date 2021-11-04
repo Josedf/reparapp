@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
 import 'package:reparapp/UI/client_UI/client_profile.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/domain/controller/firestore_controller.dart';
@@ -43,12 +44,12 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
 
           //_firestoreController.isFixer(user.email);
 
-          if (_firestoreController.isfixer.isTrue) {
+          if (_firestoreController.tipo.compareTo("fixer") == 0) {
             //return FirebaseFixerLogged();
-            printInfo(info: "fixer");
+            //printInfo(info: "fixer");
             return FixerProfile();
           } else {
-            printInfo(info: "client");
+            //printInfo(info: "client");
             return ClientProfile();
           }
 
@@ -61,31 +62,9 @@ class _FirebaseCentralState extends State<FirebaseCentral> {
 
         } else {
           return ClientLogIn();
-          //return FirebaseLogIn();
         }
-
-        // if (snapshot.hasData) {
-        //     return FirebaseLoggedIn();
-        // } else {
-        //   return FirebaseLogIn();
-        // }
       },
     );
-
-    // return GetX<FirestoreController>(
-    //   builder: (controller) {
-    //     User? user = FirebaseAuth.instance.currentUser;
-    //     if (user != null) {
-    //       if (controller.isfixer.value) {
-    //         return FixerProfile();
-    //       } else {
-    //         return ClientProfile();
-    //       }
-    //     } else {
-    //       return ClientLogIn();
-    //     }
-    //   },
-    // );
   }
 
   void getUsers(email) async {
