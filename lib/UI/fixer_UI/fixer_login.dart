@@ -125,7 +125,14 @@ class _LoginPageState extends State<FixerLogIn> {
                       child: TextFormField(
                         controller: emailController,
                         decoration: const InputDecoration(
-                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 0.0,
+                              ),
+                            ),
                             filled: true,
                             fillColor: Color(0xFFF6F6F6),
                             labelText: 'Email'),
@@ -137,7 +144,14 @@ class _LoginPageState extends State<FixerLogIn> {
                         obscureText: _isObscure,
                         controller: passwordController,
                         decoration: InputDecoration(
-                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 0.0,
+                              ),
+                            ),
                             filled: true,
                             fillColor: Color(0xFFF6F6F6),
                             labelText: 'Password',
@@ -153,25 +167,23 @@ class _LoginPageState extends State<FixerLogIn> {
                             )),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // _login().then((value) {
-                        //   printInfo(info: value.toString());
-                        //   if (value) {
-                        //     Navigator.of(context).pop();
-                        //   }
-                        // });
-                        _login();
-                        if (logged) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      child: Text("Log In",
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF7879F1),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                      child: MaterialButton(
+                        onPressed: () {
+                          _login();
+                          if (logged) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: Text("Log In",
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white)),
+                        minWidth: double.maxFinite,
+                        color: Color(0xFF7879F1),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
+                            borderRadius: BorderRadius.circular(100.0)),
+                        height: 50,
                       ),
                     ),
                   ],
@@ -179,16 +191,14 @@ class _LoginPageState extends State<FixerLogIn> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => FixerSignUp()));
+                    Get.to(() => FixerSignUp());
                   },
                   child: Text("Don't have an account? Sign up as fixer",
                       style:
                           TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/loginClient', (Route<dynamic> route) => false);
+                    Get.back();
                   },
                   child: Text("Back to login as a client",
                       style:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_chats_view.dart';
 import 'package:reparapp/UI/client_UI/client_chats_view.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
@@ -38,12 +39,8 @@ class MainButtons extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => isFixer
-                                    ? FixerChatsView()
-                                    : ClientChatsView()));
+                        Get.to(() =>
+                            isFixer ? FixerChatsView() : ClientChatsView());
                       },
                       child: Icon(Icons.chat, size: 40),
                       style: ElevatedButton.styleFrom(
@@ -57,12 +54,9 @@ class MainButtons extends StatelessWidget {
                       child: isProfile
                           ? ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => isFixer
-                                            ? FixerEditProfile()
-                                            : ClientEditProfile()));
+                                Get.to(() => isFixer
+                                    ? FixerEditProfile()
+                                    : ClientEditProfile());
                               },
                               child: Icon(Icons.edit, size: 40),
                               style: ElevatedButton.styleFrom(
@@ -72,18 +66,8 @@ class MainButtons extends StatelessWidget {
                               ),
                             )
                           : ElevatedButton(
-                              // onPressed: () {
-                              //   Navigator.of(context).pushNamedAndRemoveUntil(
-                              //       isFixer ? '/profileFixer' : '/profile',
-                              //       (Route<dynamic> route) => false);
-                              // },
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => isFixer
-                                            ? FixerProfile()
-                                            : FirebaseCentral()));
+                                Get.back();
                               },
                               child: Icon(Icons.account_box, size: 40),
                               style: ElevatedButton.styleFrom(
@@ -104,10 +88,7 @@ class MainButtons extends StatelessWidget {
                 child: FittedBox(
                     child: FloatingActionButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ClientCreateRequest()));
+                    Get.to(() => ClientCreateRequest());
                   },
                   backgroundColor: Color(0xFFA5A6F6),
                   child: Icon(Icons.build, color: Colors.white, size: 40),
