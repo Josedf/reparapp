@@ -154,7 +154,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
                   alignment: Alignment.topCenter,
                   child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       child: Text("Back",
                           style: TextStyle(color: Color(0xFFA5A6F6))))),

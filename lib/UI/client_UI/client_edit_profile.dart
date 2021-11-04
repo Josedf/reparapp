@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_signup.dart';
 import 'client_signup.dart';
@@ -59,7 +60,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       child: Text("Cancel"),
                       style: ElevatedButton.styleFrom(
@@ -72,7 +73,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
                   Expanded(
                       child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     child: Text("Accept"),
                     style: ElevatedButton.styleFrom(

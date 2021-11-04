@@ -54,12 +54,13 @@ class _ProfilePageState extends State<FixerProfile> {
         appBar: AppBar(
           backgroundColor: Color(0xFF7879F1),
           title: Text("Fixer profile"),
-          leading: BackButton(
-            color: Colors.white,
-            onPressed: () {
-              _logout();
-            },
-          ),
+           actions: [
+            IconButton(
+                onPressed: () {
+                  _logout();
+                },
+                icon: Icon(Icons.logout))
+          ],
         ),
         extendBodyBehindAppBar: false,
         body: Container(

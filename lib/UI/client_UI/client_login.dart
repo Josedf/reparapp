@@ -119,19 +119,32 @@ class _LoginPageState extends State<ClientLogIn> {
                   child: TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
-                        border: InputBorder.none,
+                        //round border without outline
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 0.0,
+                          ),
+                        ),
                         filled: true,
                         fillColor: Color(0xFFF6F6F6),
                         labelText: 'Email'),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                  padding: EdgeInsets.only(top: 5.0, bottom: 20.0),
                   child: TextFormField(
                     obscureText: _isObscure,
                     controller: passwordController,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 0.0,
+                          ),
+                        ),
                         filled: true,
                         fillColor: Color(0xFFF6F6F6),
                         labelText: 'Password',
@@ -147,46 +160,57 @@ class _LoginPageState extends State<ClientLogIn> {
                         )),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    _login();
-                  },
-                  child: Text("Log In",
-                      style: TextStyle(fontSize: 16, color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF7879F1),
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                  child: MaterialButton(
+                    onPressed: () {
+                      _login();
+                    },
+                    child: Text("Log In",
+                        style: TextStyle(fontSize: 16, color: Colors.white)),
+                    minWidth: double.maxFinite,
+                    color: Color(0xFF7879F1),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
+                        borderRadius: BorderRadius.circular(100.0)),
+                    height: 50,
                   ),
                 ),
-                MaterialButton(
-                  onPressed: () {},
-                  child: Text("Use FingerPrint",
-                      style: TextStyle(fontSize: 16, color: Colors.white)),
-                  minWidth: double.maxFinite,
-                  color: Color(0xFF7879F1),
-                ),
-                MaterialButton(
-                  onPressed: () {},
-                  child: Text("Use Face to Log In",
-                      style: TextStyle(fontSize: 16, color: Colors.white)),
-                  minWidth: double.maxFinite,
-                  color: Color(0xFF7879F1),
-                ),
+                Padding(
+                    padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                    child: MaterialButton(
+                      onPressed: () {},
+                      child: Text("Use FingerPrint",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                      minWidth: double.maxFinite,
+                      color: Color(0xFF7879F1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100.0)),
+                      height: 50,
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                    child: MaterialButton(
+                      onPressed: () {},
+                      child: Text("Use Face to Log In",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                      minWidth: double.maxFinite,
+                      color: Color(0xFF7879F1),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100.0)),
+                      height: 50,
+                    )),
               ],
             )),
           ),
           TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FixerLogIn()));
+                Get.to(() => FixerLogIn());
               },
               child: Text("Are you fixer? Log In",
                   style: TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
           TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ClientSignUp()));
+                Get.to(() => ClientSignUp());
               },
               child: Text("Don't have an account? Sign up as client",
                   style: TextStyle(fontSize: 16, color: Color(0xFFA5A6F6)))),
