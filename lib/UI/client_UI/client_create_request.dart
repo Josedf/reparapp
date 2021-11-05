@@ -100,7 +100,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
     print("Selected " + dropdownValue);
     print("Description " + _descriptionController.text);
     print("Email " + email);
-    Map<String, String> current_user = await _firestoreService.getUser(email);
+    Map<String, String> current_user = await _firestoreService.getClient(email);
     if (current_user == {} || current_user == null) {
       print("User not found");
       return false;

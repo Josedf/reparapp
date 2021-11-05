@@ -1,9 +1,54 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/Models/Message.dart';
+import 'package:reparapp/Models/Request_Model.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
-class FixerAllRequests extends StatelessWidget {
+
+
+
+class FixerAllRequests extends StatefulWidget {
+
+  const FixerAllRequests({Key? key}) : super(key: key);
+
+  @override
+  _FixerAllRequestsState createState() => _FixerAllRequestsState();
+
+}
+  class _FixerAllRequestsState extends State<FixerAllRequests>{
+    List<Request> fixers_requests=[];
+    final FirestoreService _firestoreService = Get.find();
+    void initState() {
+      super.initState();
+      User? user = FirebaseAuth.instance.currentUser;
+      String? em = user!.email;
+      getRequestInfo(em);
+    }
+
+    void getRequestInfo(em) async {
+     Map<String,String> fixermap = await _firestoreService.getFixer(em);
+
+      if(fixermap.isNotEmpty && fixermap != null){
+        String? category = fixermap['category'];
+        List<Request> fixersRequests= await _firestoreService.getRequests(category!);
+        setState(() {
+          fixers_requests = fixersRequests;
+
+        });
+      }
+    }
+
+    Image decoder(String img64) {
+      return Image.memory(base64Decode(img64));
+    }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,9 +68,10 @@ class FixerAllRequests extends StatelessWidget {
                 topRight: Radius.circular(30.0),
               ),
               child: ListView.builder(
-                  itemCount: clientChats.length,
+                  itemCount: fixers_requests.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final Message userChat = clientChats[index];
+                    final Request request = fixers_requests[index];
+
                     return Container(
                       child: Container(
                         margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -51,8 +97,7 @@ class FixerAllRequests extends StatelessWidget {
                                     height: 130.0,
                                     width: 382.0,
                                     color: Colors.white,
-                                    child: Image.asset(userChat.sender.ppic,
-                                        width: 357, height: 130),
+                                    child: decoder(request.image64List[0])
                                   ),
                                 ),
                               ],
@@ -63,7 +108,7 @@ class FixerAllRequests extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      userChat.sender.name,
+                                      request.name,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 16.0,
@@ -74,7 +119,7 @@ class FixerAllRequests extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width *
                                           0.60,
                                       child: Text(
-                                        userChat.message,
+                                       request.description,
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16.0,
@@ -82,7 +127,7 @@ class FixerAllRequests extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    Text(userChat.time,
+                                    Text(request.time,
                                         style: TextStyle(
                                             color:
                                                 Colors.black.withOpacity(0.6))),
@@ -92,9 +137,17 @@ class FixerAllRequests extends StatelessWidget {
                                     width: 40.0,
                                     height: 35.0,
                                     alignment: Alignment.bottomRight,
-                                    child: Icon(
-                                      Icons.mail_outline,
+                                    child:  IconButton(
+                                      icon: Icon(Icons.mail_outline),
                                       color: Color(0xFFA5A6F6),
+                                      onPressed: () {
+                                       Get.to(() => FixerRequest(address: request.address,
+                                        name: request.name,
+                                        time: request.time,
+                                        description: request.description,
+                                      title: request.title ,
+                                      image64List: request.image64List ));
+                                      },
                                     ))
                               ],
                             ),
@@ -110,4 +163,7 @@ class FixerAllRequests extends StatelessWidget {
       ],
     );
   }
+
+
 }
+
