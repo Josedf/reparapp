@@ -134,7 +134,6 @@ class _CreateRequestState extends State<ClientCreateRequest> {
         "img64": img64String,
         "latitude": locationController.userLocation.value.latitude.toString(),
         "longitude": locationController.userLocation.value.longitude.toString(),
-
       });
 
       print("Request created succesfully");
@@ -289,8 +288,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
               padding: EdgeInsets.all(10),
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ClientMap()));
+                  Get.to(() => ClientMap());
                 },
                 child: Text("Set Location",
                     style: TextStyle(fontSize: 16, color: Color(0xFF7879F1))),
