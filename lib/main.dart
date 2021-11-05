@@ -20,11 +20,15 @@ import 'UI/fixer_UI/fixer_edit_profile.dart';
 import 'UI/fixer_UI/fixer_profile.dart';
 import 'UI/fixer_UI/fixer_signup.dart';
 import 'domain/controller/firestore_controller.dart';
+import 'domain/controller/location_controller.dart';
+import 'domain/use_case/locator_service.dart';
 import 'firebase/firebase_central.dart';
 
 void main() {
   Get.lazyPut<FirestoreService>(() => FirestoreService());
   Get.lazyPut<FirestoreController>(() => FirestoreController());
+  Get.put(LocatorService());
+  Get.put(LocationController());
   // this is the key
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -39,37 +43,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          scaffoldBackgroundColor: const Color(0xFFE8E9FC),
-          fontFamily: 'Inder'),
-      routes: {
-        '/loginClient': (context) => const ClientLogIn(),
-        '/signupFixer': (context) => const FixerSignUp(),
-        '/loginFixer': (context) => const FixerLogIn(),
-        //'/profile': (context) => const ClientProfile(),
-        '/profile': (context) => const FirebaseCentral(),
-        '/profileFixer': (context) => const FixerProfile()
-      },
-      home: SafeArea(child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: null,
-          body: FutureBuilder(
-            future: _initialization,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print("error ${snapshot.error}");
-                return Wrong();
-              }
-              if (snapshot.connectionState == ConnectionState.done) {
-                //return GoogleCentral();
-                return FirebaseCentral();
-              }
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            scaffoldBackgroundColor: const Color(0xFFE8E9FC),
+            fontFamily: 'Inder'),
+        routes: {
+          '/loginClient': (context) => const ClientLogIn(),
+          '/signupFixer': (context) => const FixerSignUp(),
+          '/loginFixer': (context) => const FixerLogIn(),
+          //'/profile': (context) => const ClientProfile(),
+          '/profile': (context) => const FirebaseCentral(),
+          '/profileFixer': (context) => const FixerProfile()
+        },
+        home: SafeArea(
+          child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              appBar: null,
+              body: FutureBuilder(
+                future: _initialization,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    print("error ${snapshot.error}");
+                    return Wrong();
+                  }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    //return GoogleCentral();
+                    return FirebaseCentral();
+                  }
 
-              return Loading();
-            },
-          )),
-    ));
+                  return Loading();
+                },
+              )),
+        ));
   }
 }
 
