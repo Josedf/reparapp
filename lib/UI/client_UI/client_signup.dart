@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_login.dart';
 
 class ClientSignUp extends StatefulWidget {
@@ -27,13 +28,13 @@ class _LoginPageState extends State<ClientSignUp> {
     super.initState();
   }
 
-  _logout() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-  }
+  // _logout() async {
+  //   try {
+  //     await FirebaseAuth.instance.signOut();
+  //   } on FirebaseAuthException catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<void> _signup(BuildContext context) async {
     try {
@@ -42,7 +43,7 @@ class _LoginPageState extends State<ClientSignUp> {
               email: emailController.text, password: passwordController.text);
 
       final _firestore = FirebaseFirestore.instance;
-      _firestore.collection("users").add({
+      await _firestore.collection("users").add({
         "email": emailController.text,
         "type": "client",
         "name": nameController.text,
@@ -50,8 +51,8 @@ class _LoginPageState extends State<ClientSignUp> {
         "address": addressController.text,
         "city": dropdownValue,
       });
-      _logout();
-      Navigator.of(context).pop();
+      //_logout();
+      Get.back();
       //Navigator.of(context).pop();
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => ClientLogIn()));

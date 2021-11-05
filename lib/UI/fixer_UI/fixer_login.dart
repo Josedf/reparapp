@@ -170,10 +170,10 @@ class _LoginPageState extends State<FixerLogIn> {
                     Padding(
                       padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
                       child: MaterialButton(
-                        onPressed: () {
-                          _login();
+                        onPressed: () async {
+                          await _login();
                           if (logged) {
-                            Navigator.of(context).pop();
+                            Get.back();
                           }
                         },
                         child: Text("Log In",

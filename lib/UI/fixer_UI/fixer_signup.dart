@@ -27,14 +27,6 @@ class _LoginPageState extends State<FixerSignUp> {
     super.initState();
   }
 
-  _logout() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-  }
-
   Future<void> _signup(BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -42,14 +34,15 @@ class _LoginPageState extends State<FixerSignUp> {
               email: emailController.text, password: passwordController.text);
 
       final _firestore = FirebaseFirestore.instance;
-      _firestore.collection("users").add({
+      await _firestore.collection("users").add({
+        "name": nameController.text,
         "email": emailController.text,
         "type": "fixer",
         "phone": phoneController.text,
         "category": dropdownValue,
       });
-      _logout();
-      Navigator.of(context).pop();
+      //_logout();
+      Get.back();
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => FixerLogIn()));
     } on FirebaseAuthException catch (e) {
