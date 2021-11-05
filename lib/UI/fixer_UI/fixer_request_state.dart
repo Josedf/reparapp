@@ -1,17 +1,28 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reparapp/Models/Request_Model.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 
 class FixerRequest extends StatefulWidget {
-  const FixerRequest({Key? key}) : super(key: key);
+  final String address;
+  final String name;
+  final String time;
+  final String description;
+  final String title;
+  final List<String> image64List; //Image in base64;
+
+  const FixerRequest({Key? key, required this.address,required this.name, required this.time, required this.description,  required this.title,required this.image64List}) : super(key: key);
 
   @override
   FixerRequestState createState() => FixerRequestState();
 }
 
 class FixerRequestState extends State<FixerRequest> {
+  int current_index =0;
   @override
   void initState() {
     super.initState();
@@ -22,37 +33,39 @@ class FixerRequestState extends State<FixerRequest> {
     'assets/images/fixR2.jpg',
   ];
 
+
+  Image decoder(String img64) {
+    return Image.memory(base64Decode(img64));
+  }
+
+
   Widget slideshow() {
     //Slideshow con mocks
     return Center(
-      child: CarouselSlider(
-        options: CarouselOptions(
-          enlargeCenterPage: true,
-          enableInfiniteScroll: false,
-          autoPlay: false,
-        ),
-        items: imageList
-            .map((image) => ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(image),
-                        fit: BoxFit.cover,
-                        width: 1050,
-                        height: 350,
-                      )
-                    ],
-                  ),
-                ))
-            .toList(),
-      ),
-    );
+        child: CarouselSlider(
+          options: CarouselOptions(
+            onPageChanged: (index, reason) {
+              current_index = index;
+              print("Image#: " + current_index.toString());
+            },
+            enlargeCenterPage: true,
+            enableInfiniteScroll: false,
+            autoPlay: false,
+          ),
+          items: widget.image64List
+              .map((img64) => ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Stack(
+              children: <Widget>[decoder(img64)],
+            ),
+          ))
+              .toList(),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
         child: Scaffold(
             body: Container(
@@ -90,23 +103,23 @@ class FixerRequestState extends State<FixerRequest> {
               children: [
                 Padding(
                     padding: EdgeInsets.only(top: 20),
-                    child: Text("Mi computador no funciona",
+                    child: Text(widget.title,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text("Autor: Diego",
+                    child: Text("Autor: "+widget.name,
                         style: TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text("Dirección: Caribe Azul",
+                    child: Text("Dirección: "+widget.address,
                         style: TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
-                        "Hola, ayer estaba jugando DBD en mi PC y derrepente se apagó y no volvió a encender, me dicen que es la RAM pero no tengo la mas minima idea de que es eso, necesito asistencia!",
+                        widget.description,
                         style:
                             TextStyle(fontSize: 16, color: Color(0xFF666666)))),
                 Padding(
