@@ -13,6 +13,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snack.dart';
 import 'package:reparapp/UI/client_UI/client_images.dart';
 import 'package:reparapp/UI/client_UI/client_map.dart';
+import 'package:reparapp/domain/controller/location_controller.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -47,6 +48,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
   ];
 
   Future<bool> _createRequest() async {
+    LocationController locationController = Get.find();
     print("Descripción: " + _descriptionController.text);
     if (_descriptionController.text == "" ||
         _descriptionController.text.isEmpty) {
@@ -83,6 +85,20 @@ class _CreateRequestState extends State<ClientCreateRequest> {
           duration: Duration(seconds: 3));
       return false;
     }
+
+    if (locationController.userLocation.value.latitude == 0 &&
+        locationController.userLocation.value.longitude == 0) {
+      Get.snackbar('Error', 'Please select your location',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
     final _firestore = FirebaseFirestore.instance;
     String email = user!.email.toString();
     print("Selected " + dropdownValue);
@@ -93,7 +109,7 @@ class _CreateRequestState extends State<ClientCreateRequest> {
       print("User not found");
       return false;
     }
-    //print(current_user["name"]);
+
     try {
       _firestore.collection("requests").add({
         "name": current_user["name"],
@@ -102,7 +118,9 @@ class _CreateRequestState extends State<ClientCreateRequest> {
         "city": current_user["city"],
         "description": _descriptionController.text,
         "category": dropdownValue,
-        "img64": img64String
+        "img64": img64String,
+        "latitude": locationController.userLocation.value.latitude.toString(),
+        "longitude": locationController.userLocation.value.longitude.toString(),
       });
 
       print("Request created succesfully");
