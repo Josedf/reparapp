@@ -74,9 +74,7 @@ class FirestoreService {
     Map<String, String> map = {};
     QuerySnapshot users = await sRef.get();
     if (users.docs.isNotEmpty) {
-
       for (var doc in users.docs) {
-
         map = {
           "category": doc["category"],
           "email": doc["email"],
@@ -88,32 +86,27 @@ class FirestoreService {
     return {};
   }
 
-
-
   Future<List<Request>> getRequests(String category) async {
     final _firestore = FirebaseFirestore.instance;
-    var sRef = _firestore.collection("requests").where('category', isEqualTo: category);
-     List<Request> requestList = [];
-
+    var sRef = _firestore
+        .collection("requests")
+        .where('category', isEqualTo: category);
+    List<Request> requestList = [];
 
     QuerySnapshot Requests = await sRef.get();
     if (Requests.docs.isNotEmpty) {
       for (var doc in Requests.docs) {
-
         requestList.add(Request(
-           address: doc["address"],
-           category: doc["category"],
-           city: doc["city"],
-            description: doc["description"],
-            image64List: doc["img64"].split(','),
-            name: doc["name"],
-            phone: doc["phone"],
-            title: doc["title"],
-            time: "13:00 pm"
+          address: doc["address"],
+          category: doc["category"],
+          city: doc["city"],
+          description: doc["description"],
+          image64List: doc["img64"].split(','),
+          name: doc["name"],
+          phone: doc["phone"],
+          title: doc["title"],
+          time: "13:00 pm",
         ));
-
-
-
       }
 
       return requestList;
@@ -122,4 +115,32 @@ class FirestoreService {
     return [];
   }
 
+  // Future<List<Request>> getRequestsLocation(String id) async {
+  //   final _firestore = FirebaseFirestore.instance;
+  //   var sRef = _firestore
+  //       .collection("requests")
+  //       .where('id', isEqualTo: id);
+  //   List<Request> requestList = [];
+
+  //   QuerySnapshot Requests = await sRef.get();
+  //   if (Requests.docs.isNotEmpty) {
+  //     for (var doc in Requests.docs) {
+  //       requestList.add(Request(
+  //           address: doc["address"],
+  //           category: doc["category"],
+  //           city: doc["city"],
+  //           description: doc["description"],
+  //           image64List: doc["img64"].split(','),
+  //           name: doc["name"],
+  //           phone: doc["phone"],
+  //           title: doc["title"],
+  //           time: "13:00 pm",
+  //           id: doc["id"]));
+  //     }
+
+  //     return requestList;
+  //   }
+
+  //   return [];
+  // }
 }

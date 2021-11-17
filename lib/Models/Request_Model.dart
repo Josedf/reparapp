@@ -1,5 +1,3 @@
-
-
 class Request {
   final String address;
   final String category;
@@ -11,6 +9,7 @@ class Request {
   final String phone;
   final String title;
   final String time;
+  //final String id;
 
   Request({
     required this.address,
@@ -22,11 +21,6 @@ class Request {
     required this.phone,
     required this.title,
     required this.time,
+    //required this.id,
   });
-
-
 }
-
-
-
-

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
 
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_map.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
                     return Wrong();
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
-                    //return GoogleCentral();
+                    //return FixerMap();
                     return FirebaseCentral();
                   }
 

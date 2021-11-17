@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/dynamic_extensions.dart';
 import 'package:reparapp/UI/client_UI/client_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_edit_profile.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_login.dart';
@@ -19,6 +22,9 @@ class _ProfilePageState extends State<FixerProfile> {
   @override
   void initState() {
     super.initState();
+    User? user = FirebaseAuth.instance.currentUser;
+    String? em = user!.email;
+    getUserInfo(em);
   }
 
   _logout() async {
@@ -26,6 +32,36 @@ class _ProfilePageState extends State<FixerProfile> {
       await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
       print(e);
+    }
+  }
+
+  String name = "";
+  String email = "";
+  String category = "";
+  String phone = "";
+  String type = "";
+
+  void getUserInfo(em) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore
+        .collection("users")
+        .where("email", isEqualTo: em)
+        .where("type", isEqualTo: "fixer");
+    QuerySnapshot users = await sRef.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        print(doc);
+        setState(() {
+          name = doc["name"];
+          email = doc["email"];
+          category = doc["category"];
+          phone = doc["phone"];
+          type = doc["type"];
+        });
+        break;
+      }
+    } else {
+      printInfo(info: "vacio");
     }
   }
 
@@ -54,7 +90,7 @@ class _ProfilePageState extends State<FixerProfile> {
         appBar: AppBar(
           backgroundColor: Color(0xFF7879F1),
           title: Text("Fixer profile"),
-           actions: [
+          actions: [
             IconButton(
                 onPressed: () {
                   _logout();
@@ -69,7 +105,7 @@ class _ProfilePageState extends State<FixerProfile> {
             children: [
               widgetProfilePhoto(),
               Center(
-                child: Text("Fixer Name",
+                child: Text(name,
                     style: TextStyle(fontFamily: 'Inder', fontSize: 30)),
               ),
               Row(
@@ -78,7 +114,7 @@ class _ProfilePageState extends State<FixerProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Email: " + "fixer@gmail.com",
+                    child: Text("Email: " + email,
                         style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],
@@ -89,7 +125,7 @@ class _ProfilePageState extends State<FixerProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Phone: " + "3012222222",
+                    child: Text("Phone: " + phone,
                         style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],
@@ -100,7 +136,7 @@ class _ProfilePageState extends State<FixerProfile> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("category: " + "Computadores",
+                    child: Text("category: " + category,
                         style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
                   ),
                 ],

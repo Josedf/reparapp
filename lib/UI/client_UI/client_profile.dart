@@ -44,7 +44,6 @@ class _ProfilePageState extends State<ClientProfile> {
   }
 
   Widget widgetProfilePhoto() {
-    double height = MediaQuery.of(context).size.height;
     return Container(
       color: Colors.white,
       height: MediaQuery.of(context).size.height * 0.33,

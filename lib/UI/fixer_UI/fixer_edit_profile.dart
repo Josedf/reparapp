@@ -14,16 +14,107 @@ class FixerEditProfile extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<FixerEditProfile> {
-  String name = "";
-  String email = "";
-  String address = "";
-  String phone = "";
-  String city = "";
-  String type = "";
-
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<String> getClientId(String email) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore.collection("users").where("email", isEqualTo: email);
+
+    QuerySnapshot users = await sRef.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        return doc.id;
+      }
+    }
+    return "user not found";
+  }
+
+  Future<bool> _updateProfile(BuildContext context) async {
+    if (nameController.text == "" || nameController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a name',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (dropdownValue == "Select your new Category") {
+      Get.snackbar('Error', 'Please select a category',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (phoneController.text == "" || phoneController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a phone number',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    try {
+      final _firestore = FirebaseFirestore.instance;
+
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String em = user.email!;
+        getClientId(em).then((value) async {
+          if (value != "user not found") {
+            DocumentReference documentReferencer =
+                _firestore.collection("users").doc(value);
+            await documentReferencer.update({
+              "type": "fixer",
+              "name": nameController.text,
+              "phone": phoneController.text,
+              "category": dropdownValue,
+            });
+            Get.snackbar('Success', 'Your info has been updated',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Color(0xFFA5A6F6),
+                colorText: Colors.white,
+                borderRadius: 10,
+                margin: EdgeInsets.all(10),
+                snackStyle: SnackStyle.FLOATING,
+                duration: Duration(seconds: 3));
+            return true;
+          } else {
+            Get.snackbar('Error', 'Fixer not found',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Color(0xFF808080),
+                colorText: Colors.white,
+                borderRadius: 10,
+                margin: EdgeInsets.all(10),
+                snackStyle: SnackStyle.FLOATING,
+                duration: Duration(seconds: 3));
+            return false;
+          }
+        });
+        return false;
+      } else {
+        printError(info: "user null");
+        return false;
+      }
+    } on FirebaseAuthException catch (e) {
+      printError(info: e.code);
+      return false;
+    }
   }
 
   Widget widgetProfilePhoto() {
@@ -45,7 +136,7 @@ class _ProfilePageState extends State<FixerEditProfile> {
     );
   }
 
-  Widget mainButtons() {
+  Widget mainButtons(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -72,7 +163,7 @@ class _ProfilePageState extends State<FixerEditProfile> {
                   Expanded(
                       child: ElevatedButton(
                     onPressed: () {
-                      Get.back();
+                      _updateProfile(context);
                     },
                     child: Text("Accept"),
                     style: ElevatedButton.styleFrom(
@@ -90,7 +181,7 @@ class _ProfilePageState extends State<FixerEditProfile> {
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  final addressController = TextEditingController();
+  //final addressController = TextEditingController();
   final cityController = TextEditingController();
   String dropdownValue = 'Select your new Category';
 
@@ -163,7 +254,7 @@ class _ProfilePageState extends State<FixerEditProfile> {
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 child: TextFormField(
-                  controller: nameController,
+                  controller: phoneController,
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       filled: true,
@@ -181,7 +272,7 @@ class _ProfilePageState extends State<FixerEditProfile> {
                   color: Color(0x9FFFFFFF),
                 ),
               ),
-              mainButtons(),
+              mainButtons(context),
             ],
           ),
         ));

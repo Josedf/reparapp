@@ -10,6 +10,7 @@ import 'package:reparapp/domain/use_case/locator_service.dart';
 class LocationController extends GetxController {
   final userLocation = UserLocation(latitude: 0, longitude: 0).obs;
   var errorMsg = "".obs;
+  var requestId = "".obs;
   var _liveUpdate = false.obs;
   //var markers = <Marker>[].obs;
   var markers = <MarkerId, Marker>{}.obs;
@@ -34,21 +35,21 @@ class LocationController extends GetxController {
       );
       markers[const MarkerId('0')] = marker;
 
-      Marker marker1 = const Marker(
-        infoWindow: InfoWindow(title: '1', snippet: '*'),
-        icon: BitmapDescriptor.defaultMarker,
-        markerId: MarkerId('1'),
-        position: LatLng(10.930633152447768, -74.81758873396359),
-      );
-      markers[const MarkerId('1')] = marker1;
+      // Marker marker1 = const Marker(
+      //   infoWindow: InfoWindow(title: '1', snippet: '*'),
+      //   icon: BitmapDescriptor.defaultMarker,
+      //   markerId: MarkerId('1'),
+      //   position: LatLng(10.930633152447768, -74.81758873396359),
+      // );
+      // markers[const MarkerId('1')] = marker1;
 
-      Marker marker2 = const Marker(
-        infoWindow: InfoWindow(title: '2', snippet: '*'),
-        icon: BitmapDescriptor.defaultMarker,
-        markerId: MarkerId('2'),
-        position: LatLng(10.936442649033246, -74.79614263876492),
-      );
-      markers[const MarkerId('2')] = marker2;
+      // Marker marker2 = const Marker(
+      //   infoWindow: InfoWindow(title: '2', snippet: '*'),
+      //   icon: BitmapDescriptor.defaultMarker,
+      //   markerId: MarkerId('2'),
+      //   position: LatLng(10.936442649033246, -74.79614263876492),
+      // );
+      // markers[const MarkerId('2')] = marker2;
     }
     changeMarkers = !changeMarkers;
   }

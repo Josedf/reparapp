@@ -36,7 +36,79 @@ class _LoginPageState extends State<ClientSignUp> {
   //   }
   // }
 
-  Future<void> _signup(BuildContext context) async {
+  Future<bool> _signup(BuildContext context) async {
+    if (nameController.text == "" || nameController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a name',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (emailController.text == "" || emailController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write an email',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (passwordController.text == "" || passwordController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a password',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (phoneController.text == "" || phoneController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a phone number',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (dropdownValue == "Select your city") {
+      Get.snackbar('Error', 'Please select a city',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (addressController.text == "" || addressController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write an address',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -51,20 +123,24 @@ class _LoginPageState extends State<ClientSignUp> {
         "address": addressController.text,
         "city": dropdownValue,
       });
-      //_logout();
+      Get.snackbar('Success', 'Created succesfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFFA5A6F6),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
       Get.back();
-      //Navigator.of(context).pop();
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => ClientLogIn()));
+      Get.back();
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      //Navigator.of(context).pop();
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => ClientLogIn()));
+      return false;
     }
   }
 

@@ -15,16 +15,126 @@ class ClientEditProfile extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ClientEditProfile> {
-  String name = "";
-  String email = "";
-  String address = "";
-  String phone = "";
-  String city = "";
-  String type = "";
-
   @override
   void initState() {
     super.initState();
+  }
+
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final addressController = TextEditingController();
+  final cityController = TextEditingController();
+  String dropdownValue = 'Select your new City';
+
+  Future<String> getClientId(String email) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore.collection("users").where("email", isEqualTo: email);
+
+    QuerySnapshot users = await sRef.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        return doc.id;
+      }
+    }
+    return "user not found";
+  }
+
+  Future<bool> _updateProfile(BuildContext context) async {
+    if (nameController.text == "" || nameController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a name',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (dropdownValue == "Select your new City") {
+      Get.snackbar('Error', 'Please select a city',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (phoneController.text == "" || phoneController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write a phone number',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (addressController.text == "" || addressController.text.isEmpty) {
+      Get.snackbar('Error', 'Please write an address',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    try {
+      final _firestore = FirebaseFirestore.instance;
+
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String em = user.email!;
+        getClientId(em).then((value) async {
+          if (value != "user not found") {
+            DocumentReference documentReferencer =
+                _firestore.collection("users").doc(value);
+            await documentReferencer.update({
+              "type": "client",
+              "name": nameController.text,
+              "phone": phoneController.text,
+              "address": addressController.text,
+              "city": dropdownValue,
+            });
+            Get.snackbar('Success', 'Your info has been updated',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Color(0xFFA5A6F6),
+                colorText: Colors.white,
+                borderRadius: 10,
+                margin: EdgeInsets.all(10),
+                snackStyle: SnackStyle.FLOATING,
+                duration: Duration(seconds: 3));
+            return true;
+          } else {
+            Get.snackbar('Error', 'User not found',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Color(0xFF808080),
+                colorText: Colors.white,
+                borderRadius: 10,
+                margin: EdgeInsets.all(10),
+                snackStyle: SnackStyle.FLOATING,
+                duration: Duration(seconds: 3));
+            return false;
+          }
+        });
+        return false;
+      } else {
+        printError(info: "user null");
+        return false;
+      }
+    } on FirebaseAuthException catch (e) {
+      printError(info: e.code);
+      return false;
+    }
   }
 
   Widget widgetProfilePhoto() {
@@ -46,7 +156,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
     );
   }
 
-  Widget mainButtons() {
+  Widget mainButtons(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -73,7 +183,8 @@ class _ProfilePageState extends State<ClientEditProfile> {
                   Expanded(
                       child: ElevatedButton(
                     onPressed: () {
-                      Get.back();
+                      _updateProfile(context);
+                      //Get.back();
                     },
                     child: Text("Accept"),
                     style: ElevatedButton.styleFrom(
@@ -88,16 +199,6 @@ class _ProfilePageState extends State<ClientEditProfile> {
       ],
     );
   }
-
-  // void updateinfo(datos en textfields) async {
-
-  // }
-
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final addressController = TextEditingController();
-  final cityController = TextEditingController();
-  String dropdownValue = 'Select your new City';
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +273,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 child: TextFormField(
-                  controller: nameController,
+                  controller: phoneController,
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       filled: true,
@@ -183,7 +284,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 child: TextFormField(
-                  controller: nameController,
+                  controller: addressController,
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       filled: true,
@@ -191,8 +292,7 @@ class _ProfilePageState extends State<ClientEditProfile> {
                       labelText: 'Write your new Address'),
                 ),
               ),
-              Text(""),
-              mainButtons(),
+              mainButtons(context),
             ],
           ),
         ));
