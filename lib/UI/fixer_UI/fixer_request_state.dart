@@ -14,15 +14,25 @@ class FixerRequest extends StatefulWidget {
   final String description;
   final String title;
   final List<String> image64List; //Image in base64;
+  final String requestId;
 
-  const FixerRequest({Key? key, required this.address,required this.name, required this.time, required this.description,  required this.title,required this.image64List}) : super(key: key);
+  const FixerRequest(
+      {Key? key,
+      required this.address,
+      required this.name,
+      required this.time,
+      required this.description,
+      required this.title,
+      required this.image64List,
+      required this.requestId})
+      : super(key: key);
 
   @override
   FixerRequestState createState() => FixerRequestState();
 }
 
 class FixerRequestState extends State<FixerRequest> {
-  int current_index =0;
+  int current_index = 0;
   @override
   void initState() {
     super.initState();
@@ -33,39 +43,36 @@ class FixerRequestState extends State<FixerRequest> {
     'assets/images/fixR2.jpg',
   ];
 
-
   Image decoder(String img64) {
     return Image.memory(base64Decode(img64));
   }
-
 
   Widget slideshow() {
     //Slideshow con mocks
     return Center(
         child: CarouselSlider(
-          options: CarouselOptions(
-            onPageChanged: (index, reason) {
-              current_index = index;
-              print("Image#: " + current_index.toString());
-            },
-            enlargeCenterPage: true,
-            enableInfiniteScroll: false,
-            autoPlay: false,
-          ),
-          items: widget.image64List
-              .map((img64) => ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Stack(
-              children: <Widget>[decoder(img64)],
-            ),
-          ))
-              .toList(),
-        ));
+      options: CarouselOptions(
+        onPageChanged: (index, reason) {
+          current_index = index;
+          print("Image#: " + current_index.toString());
+        },
+        enlargeCenterPage: true,
+        enableInfiniteScroll: false,
+        autoPlay: false,
+      ),
+      items: widget.image64List
+          .map((img64) => ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Stack(
+                  children: <Widget>[decoder(img64)],
+                ),
+              ))
+          .toList(),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
         child: Scaffold(
             body: Container(
@@ -108,18 +115,17 @@ class FixerRequestState extends State<FixerRequest> {
                             fontSize: 24, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text("Autor: "+widget.name,
+                    child: Text("Autor: " + widget.name,
                         style: TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text("Dirección: "+widget.address,
+                    child: Text("Dirección: " + widget.address,
                         style: TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text(
-                        widget.description,
+                    child: Text(widget.description,
                         style:
                             TextStyle(fontSize: 16, color: Color(0xFF666666)))),
                 Padding(
@@ -129,7 +135,8 @@ class FixerRequestState extends State<FixerRequest> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FixerSetOffer()));
+                                builder: (context) => FixerSetOffer(
+                                    requestId: widget.requestId)));
                       },
                       child: Text("Check Offer",
                           style: TextStyle(fontSize: 16, color: Colors.white)),

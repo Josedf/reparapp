@@ -45,6 +45,19 @@ class FirestoreService {
     return "x";
   }
 
+  Future<String> getClientId(String email) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore.collection("users").where("email", isEqualTo: email);
+
+    QuerySnapshot users = await sRef.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        return doc.id;
+      }
+    }
+    return "user not found";
+  }
+
   Future<Map<String, String>> getClient(String email) async {
     final _firestore = FirebaseFirestore.instance;
     var sRef = _firestore.collection("users").where("email", isEqualTo: email);
@@ -80,6 +93,7 @@ class FirestoreService {
           "category": doc["category"],
           "email": doc["email"],
           "type": doc["type"],
+          "name": doc["name"],
         };
         return map;
       }
@@ -110,6 +124,7 @@ class FirestoreService {
           price: doc["price"],
           clientAgree: doc["clientAgree"],
           fixerAgree: doc["fixerAgree"],
+          requestId: doc.id,
         ));
       }
 
@@ -151,6 +166,7 @@ class FirestoreService {
           price: doc["price"],
           clientAgree: doc["clientAgree"],
           fixerAgree: doc["fixerAgree"],
+          requestId: doc.id,
         ));
       }
 

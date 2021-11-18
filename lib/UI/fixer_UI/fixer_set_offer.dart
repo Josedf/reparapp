@@ -1,12 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class FixerSetOffer extends StatefulWidget {
-  const FixerSetOffer({Key? key}) : super(key: key);
+  final String requestId;
+  const FixerSetOffer({Key? key, required this.requestId}) : super(key: key);
 
   @override
   _SetOfferState createState() => _SetOfferState();
@@ -15,6 +21,25 @@ class FixerSetOffer extends StatefulWidget {
 final offerController = TextEditingController();
 
 class _SetOfferState extends State<FixerSetOffer> {
+  final FirestoreService _firestoreService = Get.find();
+  User? user = FirebaseAuth.instance.currentUser;
+  void _setOffer(String price) async {
+    final _firestore = FirebaseFirestore.instance;
+    String email = user!.email.toString();
+    Map<String, String> fixer = await _firestoreService.getFixer(email);
+    if (user != null) {
+      String em = user!.email!;
+      DocumentReference documentReferencer =
+          _firestore.collection("requests").doc(widget.requestId);
+      await documentReferencer.update({
+        "fixerName": fixer["name"],
+        "fixerEmail": email,
+        "price": price,
+        "fixerAgree": "True",
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,6 +93,7 @@ class _SetOfferState extends State<FixerSetOffer> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
+                _setOffer(offerController.text);
               },
               child: Text("Set Offer",
                   style: TextStyle(fontSize: 16, color: Colors.white)),
