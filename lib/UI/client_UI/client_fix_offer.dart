@@ -13,6 +13,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get.dart';
 
 import 'package:reparapp/Models/Request_Model.dart';
+import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
@@ -197,7 +198,9 @@ class ClientFixOfferState extends State<ClientFixOffer> {
           Padding(
               padding: EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => ClientCounterOffer(requestId: widget.request.requestId,));
+                },
                 child: Text("Counter offer",
                     style: TextStyle(fontSize: 19, color: Colors.white)),
                 style: ElevatedButton.styleFrom(

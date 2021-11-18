@@ -1,12 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:reparapp/UI/client_UI/WidgetsC/client_%20all_offers.dart';
+import 'package:reparapp/UI/client_UI/client_chats_view.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class ClientCounterOffer extends StatefulWidget {
-  const ClientCounterOffer({Key? key}) : super(key: key);
+  final String requestId;
+  const ClientCounterOffer({Key? key, required this.requestId})
+      : super(key: key);
 
   @override
   _CounterOfferState createState() => _CounterOfferState();
@@ -15,6 +23,21 @@ class ClientCounterOffer extends StatefulWidget {
 final offerController = TextEditingController();
 
 class _CounterOfferState extends State<ClientCounterOffer> {
+  final FirestoreService _firestoreService = Get.find();
+
+  void _setOffer(String price) async {
+    final _firestore = FirebaseFirestore.instance;
+
+    DocumentReference documentReferencer =
+        _firestore.collection("requests").doc(widget.requestId);
+
+    await documentReferencer.update({
+      "price": price,
+      "fixerAgree":"False",
+      "clientAgree":"True"
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,7 +90,8 @@ class _CounterOfferState extends State<ClientCounterOffer> {
             padding: EdgeInsets.only(top: 300),
             child: ElevatedButton(
               onPressed: () {
-                //_login();
+                _setOffer(offerController.text);
+                Get.to(() => ClientChatsView());
               },
               child: Text("Set Offer",
                   style: TextStyle(fontSize: 16, color: Colors.white)),
