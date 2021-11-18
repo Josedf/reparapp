@@ -12,6 +12,7 @@ import 'package:reparapp/Models/Offer_Model.dart';
 import 'package:reparapp/Models/Request_Model.dart';
 import 'package:reparapp/UI/client_UI/client_fix_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class ClientAllOffers extends StatefulWidget {
@@ -38,7 +39,7 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
       String? cliente = clientmap['phone'];
 
       List<Request> clientOffers = await _firestoreService.getOffers(cliente!);
-      clientOffers.removeWhere((element) => !element.fixerAgrees()  || (element.clientAgrees() && element.fixerAgrees()));
+      clientOffers.removeWhere((element) => !element.fixerAgrees()  || (element.clientAgrees() && element.fixerAgrees()) || (element.getStatus() == Status.DECLINED) );
 
       setState(() {
         clients_offers = clientOffers;

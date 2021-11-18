@@ -42,7 +42,7 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
           await _firestoreService.getRequestsByEmail(em);
       setState(() {
         for (Request request in fixersRequests) {
-          if (!request.fixerAgrees() && !request.clientAgrees()) {
+          if (!request.fixerAgrees() && !request.clientAgrees() && request.getStatus() != Status.DECLINED) {
             fixers_requests.add(request);
           }
         }

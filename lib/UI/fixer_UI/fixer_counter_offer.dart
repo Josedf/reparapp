@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class FixerCounterOffer extends StatefulWidget {
   final String address;
@@ -39,6 +43,22 @@ class _CounterOfferState extends State<FixerCounterOffer> {
 
   Image decoder(String img64) {
     return Image.memory(base64Decode(img64));
+  }
+
+  final FirestoreService _firestoreService = Get.find();
+
+  void _updateStatus(
+      Status status, String fixerAgree, String clientAgree) async {
+    final _firestore = FirebaseFirestore.instance;
+
+    DocumentReference documentReferencer =
+        _firestore.collection("requests").doc(widget.requestId);
+
+    await documentReferencer.update({
+      "fixerAgree": fixerAgree,
+      "clientAgree": clientAgree,
+      "status": status.toString()
+    });
   }
 
   Widget slideshow() {
@@ -130,7 +150,10 @@ class _CounterOfferState extends State<FixerCounterOffer> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 10, right: 10),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _updateStatus(Status.ACCEPTED,"True","True");
+                        Get.back();
+                      },
                       child: Text("Accept offer",
                           style: TextStyle(fontSize: 19, color: Colors.white)),
                       style: ElevatedButton.styleFrom(
@@ -144,7 +167,10 @@ class _CounterOfferState extends State<FixerCounterOffer> {
                 Padding(
                     padding: EdgeInsets.all(10),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _updateStatus(Status.DECLINED,"False","False");
+                        Get.back();
+                      },
                       child: Text("Decline offer",
                           style: TextStyle(fontSize: 19, color: Colors.white)),
                       style: ElevatedButton.styleFrom(
