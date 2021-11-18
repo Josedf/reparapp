@@ -128,7 +128,7 @@ class ClientFixOfferState extends State<ClientFixOffer> {
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
               child: Row(
                 children: [
-                  Text("Reparador: ",
+                  Text("Fixer: ",
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   TextButton(
