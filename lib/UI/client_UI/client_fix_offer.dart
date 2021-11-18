@@ -1,4 +1,4 @@
-// ignore: file_names
+
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,12 +12,17 @@ class ClientFixOffer extends StatefulWidget {
   final String title;
   final String price;
   final List<String> image64List; //Image in base64;
+  final String fixerEmail;
+  final String fixerName;
+
 
   const ClientFixOffer(
       {Key? key,
       required this.title,
       required this.image64List,
-      required this.price})
+      required this.price,
+      required this.fixerEmail,
+      required this.fixerName})
       : super(key: key);
 
   @override
@@ -44,31 +49,30 @@ class ClientFixOfferState extends State<ClientFixOffer> {
     //Slideshow con mocks
     return Center(
         child: Container(
-          decoration: new BoxDecoration(
-            color: Colors.white
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: CarouselSlider(
-            options: CarouselOptions(
-              onPageChanged: (index, reason) {
-                current_index = index;
-                print("Image#: " + current_index.toString());
-              },
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              autoPlay: false,
-            ),
-            items: widget.image64List
-                .map((img64) => ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Stack(
-                        children: <Widget>[decoder(img64)],
-                      ),
-                    ))
-                .toList(),
-          ),)
-    ));
+
+            decoration: new BoxDecoration(color: Colors.white),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  onPageChanged: (index, reason) {
+                    current_index = index;
+                    print("Image#: " + current_index.toString());
+                  },
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  autoPlay: false,
+                ),
+                items: widget.image64List
+                    .map((img64) => ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Stack(
+                            children: <Widget>[decoder(img64)],
+                          ),
+                        ))
+                    .toList(),
+              ),
+            )));
   }
 
   @override
@@ -118,7 +122,23 @@ class ClientFixOfferState extends State<ClientFixOffer> {
                 ],
               )),
           Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: Row(
+                children: [
+                  Text("Reparador: ",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(widget.fixerName,
+                          style: TextStyle(
+                              fontSize: 24,
+                              decoration: TextDecoration.underline)))
+                ],
+              )),
+          Padding(
+              padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+
               child: ElevatedButton(
                 onPressed: () {},
                 child: Text("Accept offer",
