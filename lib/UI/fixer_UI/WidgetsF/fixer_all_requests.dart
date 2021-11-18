@@ -11,6 +11,8 @@ import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
+import '../fixer_counter_offer.dart';
+
 class FixerAllRequests extends StatefulWidget {
   const FixerAllRequests({Key? key}) : super(key: key);
 
@@ -35,14 +37,16 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
       String? category = fixermap['category'];
       List<Request> fixersRequests =
           await _firestoreService.getRequests(category!);
+      List<Request> fixersCounterRequests =
+          await _firestoreService.getRequestsByEmail(em);
       setState(() {
-        
-        for (Request request in fixersRequests){
-           if (request.fixerAgree != "True" && request.clientAgree != "True") {
-             fixers_requests.add(request);
-           }
+        for (Request request in fixersRequests) {
+          if (!request.fixerAgrees() && !request.clientAgrees()) {
+            fixers_requests.add(request);
+          }
         }
 
+        fixers_requests.addAll(fixersCounterRequests);
       });
     }
   }
@@ -143,15 +147,32 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
                                       icon: Icon(Icons.mail_outline),
                                       color: Color(0xFFA5A6F6),
                                       onPressed: () {
-                                        Get.to(() => FixerRequest(
-                                              address: request.address,
-                                              name: request.clientName,
-                                              time: request.time,
-                                              description: request.description,
-                                              title: request.title,
-                                              image64List: request.image64List,
-                                              requestId: request.requestId,
-                                            ));
+                                        print(request.clientAgrees());
+
+                                        if (request.clientAgrees()) {
+                                          Get.to(() => FixerCounterOffer(
+                                                address: request.address,
+                                                name: request.clientName,
+                                                time: request.time,
+                                                title: request.title,
+                                                image64List:
+                                                    request.image64List,
+                                                requestId: request.requestId,
+                                                price: request.price,
+                                              ));
+                                        } else {
+                                          Get.to(() => FixerRequest(
+                                                address: request.address,
+                                                name: request.clientName,
+                                                time: request.time,
+                                                description:
+                                                    request.description,
+                                                title: request.title,
+                                                image64List:
+                                                    request.image64List,
+                                                requestId: request.requestId,
+                                              ));
+                                        }
                                       },
                                     ))
                               ],

@@ -134,6 +134,39 @@ class FirestoreService {
     return [];
   }
 
+  Future<List<Request>> getRequestsByEmail(String fixerEmail) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore
+        .collection("requests")
+        .where('fixerEmail', isEqualTo: fixerEmail).where('fixerAgree', isEqualTo: 'False');
+    List<Request> requestList = [];
+
+    QuerySnapshot Requests = await sRef.get();
+    if (Requests.docs.isNotEmpty) {
+      for (var doc in Requests.docs) {
+        requestList.add(Request(
+          address: doc["address"],
+          category: doc["category"],
+          city: doc["city"],
+          description: doc["description"],
+          image64List: doc["img64"].split(','),
+          clientName: doc["clientName"],
+          phone: doc["phone"],
+          title: doc["title"],
+          time: "13:00 pm",
+          price: doc["price"],
+          clientAgree: doc["clientAgree"],
+          fixerAgree: doc["fixerAgree"],
+          requestId: doc.id,
+        ));
+      }
+
+      return requestList;
+    }
+
+    return [];
+  }
+
   Future<List<Request>> getOffers(String phone) async {
     final _firestore = FirebaseFirestore.instance;
 
