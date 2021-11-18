@@ -130,8 +130,8 @@ class _MyAppState extends State<FixerMap> {
                         }
                       },
                       child: Text(locationController.liveUpdate
-                          ? "Set live updates off"
-                          : "Set live updates on"))),
+                          ? "Set live off"
+                          : "Set live on"))),
                   ElevatedButton(
                       key: const Key("back"),
                       onPressed: () async {
