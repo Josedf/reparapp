@@ -68,7 +68,6 @@ class MyApp extends StatelessWidget {
                     return Wrong();
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
-                    //return FixerMap();
                     return FirebaseCentral();
                   }
 
