@@ -10,19 +10,20 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:reparapp/Models/Message.dart';
 import 'package:reparapp/Models/Offer_Model.dart';
 import 'package:reparapp/Models/Request_Model.dart';
-import 'package:reparapp/UI/client_UI/client_fix_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
-class ClientAllOffers extends StatefulWidget {
-  const ClientAllOffers({Key? key}) : super(key: key);
+import '../client_profile_fixer.dart';
+
+class ClientHistory extends StatefulWidget {
+  const ClientHistory({Key? key}) : super(key: key);
 
   @override
-  _ClientAllOffersState createState() => _ClientAllOffersState();
+  _ClientHistoryState createState() => _ClientHistoryState();
 }
 
-class _ClientAllOffersState extends State<ClientAllOffers> {
-  List<Request> clients_offers = [];
+class _ClientHistoryState extends State<ClientHistory> {
+  List<Request> clients_offers=[];
   final FirestoreService _firestoreService = Get.find();
   void initState() {
     super.initState();
@@ -32,22 +33,25 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
   }
 
   void getOfferInfo(em) async {
-    Map<String, String> clientmap = await _firestoreService.getClient(em);
+    Map<String,String> clientmap = await _firestoreService.getClient(em);
 
-    if (clientmap.isNotEmpty && clientmap != null) {
+    if(clientmap.isNotEmpty && clientmap != null){
       String? cliente = clientmap['phone'];
 
-      List<Request> clientOffers = await _firestoreService.getOffers(cliente!);
-      clientOffers.removeWhere((element) => !element.fixerAgrees()  || (element.clientAgrees() && element.fixerAgrees()));
+      List<Request> clientOffers= await _firestoreService.getOffers(cliente!);
+      print(clientOffers[0].fixerAgrees());
+      print(clientOffers[0].clientAgrees());
+      clientOffers.removeWhere((element) => !(element.clientAgrees() && element.fixerAgrees()));
 
-      print(clientOffers[0].clientAgree);
+
       setState(() {
+
         clients_offers = clientOffers;
+
+
       });
     }
   }
-
-
 
   Image decoder(String img64) {
     return Image.memory(base64Decode(img64));
@@ -119,7 +123,10 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
                                     ),
                                     SizedBox(height: 5.0),
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
+                                      width: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .width *
                                           0.60,
                                       child: Text(
                                         offer.description,
@@ -133,7 +140,7 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
                                     Text(offer.time,
                                         style: TextStyle(
                                             color:
-                                                Colors.black.withOpacity(0.6))),
+                                            Colors.black.withOpacity(0.6))),
                                   ],
                                 ),
                                 Container(
@@ -141,25 +148,18 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
                                     height: 35.0,
                                     alignment: Alignment.bottomRight,
                                     child: IconButton(
-                                      icon: Icon(Icons.arrow_forward_ios),
+                                      icon: Icon(Icons.update),
                                       color: Color(0xFFA5A6F6),
                                       onPressed: () {
-                                        Get.to(() => ClientFixOffer(
-                                              title: offer.title,
-                                              image64List: offer.image64List,
-                                              price: offer.price,
-                                              fixerEmail: offer.fixerEmail,
-                                              fixerName: offer.fixerName,
-                                              request: offer,
-                                            ));
-                                      },
-                                    ))
+                                         Get.to(() => ClientProfileFixer());
+                                      },))
                               ],
                             ),
                           ],
                         ),
                       ),
                     );
+
                   }),
             ),
           ),
@@ -169,3 +169,5 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
     );
   }
 }
+
+
