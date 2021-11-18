@@ -124,7 +124,10 @@ class _CreateRequestState extends State<ClientCreateRequest> {
 
     try {
       _firestore.collection("requests").add({
-        "name": current_user["name"],
+        "clientName": current_user["name"],
+        "clientEmail": email,
+        "fixerName": "",
+        "fixerEmail": "",
         "phone": current_user["phone"],
         "address": current_user["address"],
         "city": current_user["city"],

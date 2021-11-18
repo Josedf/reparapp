@@ -58,7 +58,8 @@ class FirestoreService {
           "name": doc["name"],
           "phone": doc["phone"],
           "type": doc["type"],
-          "city": doc["city"]
+          "city": doc["city"],
+          "clientId": doc.id
         };
         return map;
       }
@@ -118,13 +119,11 @@ class FirestoreService {
     return [];
   }
 
-
   Future<List<Request>> getOffers(String phone) async {
     final _firestore = FirebaseFirestore.instance;
 
-    var sRef = _firestore
-        .collection("requests")
-        .where('phone', isEqualTo: phone);
+    var sRef =
+        _firestore.collection("requests").where('phone', isEqualTo: phone);
     List<Request> requestList = [];
 
     QuerySnapshot Requests = await sRef.get();
@@ -160,9 +159,6 @@ class FirestoreService {
 
     return [];
   }
-
-
-
 
   // Future<List<Request>> getRequestsLocation(String id) async {
   //   final _firestore = FirebaseFirestore.instance;
