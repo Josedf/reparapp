@@ -1,3 +1,4 @@
+import '../common/Status.dart';
 class Request {
   final String address;
   final String category;
@@ -13,6 +14,7 @@ class Request {
   final String clientAgree;
   final String fixerAgree;
   final String requestId;
+  final String status;
   String fixerName;
   String fixerEmail;
 
@@ -32,6 +34,7 @@ class Request {
       required this.clientAgree,
       required this.fixerAgree,
       required this.requestId,
+      required this.status,
       this.fixerName = "",
       this.fixerEmail = ""});
 
@@ -49,5 +52,9 @@ class Request {
 
   void setFixerEmail(String email) {
     fixerEmail = email;
+  }
+
+  Status getStatus() {
+    return Status.values.firstWhere((element) => element.toString() == status);
   }
 }

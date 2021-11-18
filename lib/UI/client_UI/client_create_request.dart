@@ -13,6 +13,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snack.dart';
 import 'package:reparapp/UI/client_UI/client_images.dart';
 import 'package:reparapp/UI/client_UI/client_map.dart';
+import 'package:reparapp/common/Status.dart';
 import 'package:reparapp/domain/controller/location_controller.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -139,7 +140,8 @@ class _CreateRequestState extends State<ClientCreateRequest> {
         "longitude": locationController.userLocation.value.longitude.toString(),
         "price": "0",
         "clientAgree": "False",
-        "fixerAgree": "False"
+        "fixerAgree": "False",
+        "status": Status.CREATED.toString()
       });
 
       print("Request created succesfully");

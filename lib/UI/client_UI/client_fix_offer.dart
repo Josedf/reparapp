@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -17,7 +16,7 @@ import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
-
+import '../../common/Status.dart';
 import 'client_profile_fixer.dart';
 
 class ClientFixOffer extends StatefulWidget {
@@ -27,7 +26,6 @@ class ClientFixOffer extends StatefulWidget {
   final String fixerEmail;
   final String fixerName;
   final Request request;
-
 
   const ClientFixOffer(
       {Key? key,
@@ -43,6 +41,13 @@ class ClientFixOffer extends StatefulWidget {
   ClientFixOfferState createState() => ClientFixOfferState();
 }
 
+/*enum MyEnum {
+  value1,
+  value2,
+  value3,
+  value4,
+}*/
+
 class ClientFixOfferState extends State<ClientFixOffer> {
   final FirestoreService _firestoreService = Get.find();
   int current_index = 0;
@@ -56,25 +61,17 @@ class ClientFixOfferState extends State<ClientFixOffer> {
     'assets/images/fixR2.jpg',
   ];
 
-
-
   void _changeClientAgree(Request request) async {
-
     final _firestore = FirebaseFirestore.instance;
     String requestId = request!.requestId;
 
     if (request != null) {
       DocumentReference documentReferencer =
-      _firestore.collection("requests").doc(requestId);
-      await documentReferencer.update({
-        "clientAgree": "True" ,
-
-      });
-
+          _firestore.collection("requests").doc(requestId);
+      await documentReferencer.update(
+          {"clientAgree": "True", "status": Status.ACCEPTED.toString()});
     }
   }
-
-
 
   Image decoder(String img64) {
     return Image.memory(base64Decode(img64));
@@ -84,7 +81,6 @@ class ClientFixOfferState extends State<ClientFixOffer> {
     //Slideshow con mocks
     return Center(
         child: Container(
-
             decoration: new BoxDecoration(color: Colors.white),
             child: Padding(
               padding: EdgeInsets.all(10),
@@ -167,7 +163,10 @@ class ClientFixOfferState extends State<ClientFixOffer> {
                       onPressed: () {
                         print("entro");
                         print(widget.fixerEmail);
-                        Get.to(() => ClientProfileFixer(clientToFixer: true, fixerEmail: widget.fixerEmail,));
+                        Get.to(() => ClientProfileFixer(
+                              clientToFixer: true,
+                              fixerEmail: widget.fixerEmail,
+                            ));
                       },
                       child: Text(widget.fixerName,
                           style: TextStyle(
@@ -177,13 +176,11 @@ class ClientFixOfferState extends State<ClientFixOffer> {
               )),
           Padding(
               padding: EdgeInsets.only(top: 20, left: 10, right: 10),
-
               child: ElevatedButton(
                 onPressed: () {
                   _changeClientAgree(widget.request);
 
                   Get.back();
-
                 },
                 child: Text("Accept offer",
                     style: TextStyle(fontSize: 19, color: Colors.white)),
@@ -199,7 +196,9 @@ class ClientFixOfferState extends State<ClientFixOffer> {
               padding: EdgeInsets.all(10),
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => ClientCounterOffer(requestId: widget.request.requestId,));
+                  Get.to(() => ClientCounterOffer(
+                        requestId: widget.request.requestId,
+                      ));
                 },
                 child: Text("Counter offer",
                     style: TextStyle(fontSize: 19, color: Colors.white)),

@@ -125,8 +125,8 @@ class _CounterOfferState extends State<FixerCounterOffer> {
                 Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text("Price: \$" + widget.price,
-                        style:
-                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold))),
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 10, right: 10),
                     child: ElevatedButton(

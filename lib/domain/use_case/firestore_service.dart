@@ -124,6 +124,7 @@ class FirestoreService {
           price: doc["price"],
           clientAgree: doc["clientAgree"],
           fixerAgree: doc["fixerAgree"],
+          status: doc["status"],
           requestId: doc.id,
         ));
       }
@@ -138,7 +139,8 @@ class FirestoreService {
     final _firestore = FirebaseFirestore.instance;
     var sRef = _firestore
         .collection("requests")
-        .where('fixerEmail', isEqualTo: fixerEmail).where('fixerAgree', isEqualTo: 'False');
+        .where('fixerEmail', isEqualTo: fixerEmail)
+        .where('fixerAgree', isEqualTo: 'False');
     List<Request> requestList = [];
 
     QuerySnapshot Requests = await sRef.get();
@@ -156,6 +158,7 @@ class FirestoreService {
           time: "13:00 pm",
           price: doc["price"],
           clientAgree: doc["clientAgree"],
+          status: doc["status"],
           fixerAgree: doc["fixerAgree"],
           requestId: doc.id,
         ));
@@ -202,6 +205,7 @@ class FirestoreService {
           price: doc["price"],
           clientAgree: doc["clientAgree"],
           fixerAgree: doc["fixerAgree"],
+          status: doc["status"],
           requestId: doc.id,
         ));
       }

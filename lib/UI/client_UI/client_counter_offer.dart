@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/WidgetsC/client_%20all_offers.dart';
 import 'package:reparapp/UI/client_UI/client_chats_view.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class ClientCounterOffer extends StatefulWidget {
@@ -33,8 +34,9 @@ class _CounterOfferState extends State<ClientCounterOffer> {
 
     await documentReferencer.update({
       "price": price,
-      "fixerAgree":"False",
-      "clientAgree":"True"
+      "fixerAgree": "False",
+      "clientAgree": "True",
+      "status": Status.COUNTEROFERRED.toString()
     });
   }
 

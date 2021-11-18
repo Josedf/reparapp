@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class FixerSetOffer extends StatefulWidget {
@@ -36,6 +37,7 @@ class _SetOfferState extends State<FixerSetOffer> {
         "fixerEmail": email,
         "price": price,
         "fixerAgree": "True",
+        "status": Status.OFFERED.toString()
       });
     }
   }
