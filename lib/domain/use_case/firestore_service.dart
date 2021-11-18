@@ -117,7 +117,7 @@ class FirestoreService {
           city: doc["city"],
           description: doc["description"],
           image64List: doc["img64"].split(','),
-          name: doc["name"],
+          clientName: doc["clientName"],
           phone: doc["phone"],
           title: doc["title"],
           time: "13:00 pm",
@@ -144,6 +144,7 @@ class FirestoreService {
     QuerySnapshot Requests = await sRef.get();
 
     if (Requests.docs.isNotEmpty) {
+      //  print("Aqui");
       for (var doc in Requests.docs) {
         //print(doc["name"]);
         //print(doc["address"]);
@@ -159,9 +160,11 @@ class FirestoreService {
           city: doc["city"],
           description: doc["description"],
           image64List: doc["img64"].split(','),
-          name: doc["name"],
+          clientName: doc["clientName"],
           phone: doc["phone"],
           title: doc["title"],
+          fixerName: doc["fixerName"],
+          fixerEmail: doc["fixerEmail"],
           time: "13:00 pm",
           price: doc["price"],
           clientAgree: doc["clientAgree"],

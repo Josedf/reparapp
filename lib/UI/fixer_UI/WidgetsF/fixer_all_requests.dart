@@ -67,6 +67,7 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
                   itemCount: fixers_requests.length,
                   itemBuilder: (BuildContext context, int index) {
                     final Request request = fixers_requests[index];
+                    print(request.price);
 
                     return Container(
                       child: Container(
@@ -103,7 +104,7 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      request.name,
+                                      request.clientName,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 16.0,
@@ -138,7 +139,7 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
                                       onPressed: () {
                                         Get.to(() => FixerRequest(
                                               address: request.address,
-                                              name: request.name,
+                                              name: request.clientName,
                                               time: request.time,
                                               description: request.description,
                                               title: request.title,
