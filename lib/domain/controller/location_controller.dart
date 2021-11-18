@@ -10,14 +10,16 @@ import 'package:reparapp/domain/use_case/locator_service.dart';
 class LocationController extends GetxController {
   final userLocation = UserLocation(latitude: 0, longitude: 0).obs;
   var errorMsg = "".obs;
-  var requestId = "".obs;
+  var requestLat = "10.926312658949284".obs;
+  var requestLong = "-74.80101286794627".obs;
   var _liveUpdate = false.obs;
   //var markers = <Marker>[].obs;
   var markers = <MarkerId, Marker>{}.obs;
   StreamSubscription<UserLocation>? _positionStreamSubscription;
   LocatorService service = Get.find();
   bool get liveUpdate => _liveUpdate.value;
-  bool changeMarkers = false;
+  //bool changeMarkers = false;
+  bool changeMarkers = true;
 
   clearLocation() {
     userLocation.value = UserLocation(latitude: 0, longitude: 0);
@@ -26,12 +28,17 @@ class LocationController extends GetxController {
   updatedMarker() {
     markers.clear();
     printInfo(info: "Updading marker list");
+    double x = double.parse(requestLat.value);
+    double y = double.parse(requestLong.value);
+    printInfo(info: x.toString());
+    printInfo(info: y.toString());
     if (changeMarkers) {
-      Marker marker = const Marker(
+      Marker marker = Marker(
         infoWindow: InfoWindow(title: '0', snippet: '*'),
         icon: BitmapDescriptor.defaultMarker,
         markerId: MarkerId('0'),
-        position: LatLng(10.926312658949284, -74.80101286794627),
+        //position: LatLng(10.926312658949284, -74.80101286794627),
+        position: LatLng(x, y),
       );
       markers[const MarkerId('0')] = marker;
 
@@ -52,6 +59,7 @@ class LocationController extends GetxController {
       // markers[const MarkerId('2')] = marker2;
     }
     changeMarkers = !changeMarkers;
+    //changeMarkers = false;
   }
 
   getLocation() async {
@@ -61,6 +69,7 @@ class LocationController extends GetxController {
       Get.snackbar('Error.....', e.toString(),
           backgroundColor: Colors.red, colorText: Colors.white);
     }
+    //changeMarkers = true;
   }
 
   suscribeLocationUpdates() async {

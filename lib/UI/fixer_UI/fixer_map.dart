@@ -76,13 +76,14 @@ class _MyAppState extends State<FixerMap> {
                   ElevatedButton(
                       key: const Key("client loc"),
                       onPressed: () async {
-                        locationController.updatedMarker();
+                        await locationController.updatedMarker();
                       },
                       child: const Text("client loc")),
                   ElevatedButton(
                       key: const Key("currentLocation"),
                       onPressed: () async {
-                        locationController.getLocation();
+                        await locationController.getLocation();
+                        await locationController.updatedMarker();
                       },
                       child: const Text("Current")),
 
@@ -171,12 +172,14 @@ class _MyAppState extends State<FixerMap> {
                           controller.userLocation.value.longitude.toString() +
                           ">");
 
-                  return Text(
-                    controller.userLocation.value.latitude.toString() +
-                        " " +
-                        controller.userLocation.value.longitude.toString(),
-                    key: const Key("position"),
-                  );
+                  // return Text(
+                  //   controller.userLocation.value.latitude.toString() +
+                  //       " " +
+                  //       controller.userLocation.value.longitude.toString(),
+                  //   key: const Key("position"),
+                  // );
+
+                  return Text("");
                 },
               ),
             ],
