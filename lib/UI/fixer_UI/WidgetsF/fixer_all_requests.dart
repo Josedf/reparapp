@@ -9,6 +9,7 @@ import 'package:reparapp/Models/Message.dart';
 import 'package:reparapp/Models/Request_Model.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_request_state.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 import '../fixer_counter_offer.dart';

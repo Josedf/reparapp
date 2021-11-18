@@ -5,6 +5,7 @@ import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
 import 'package:reparapp/UI/client_UI/client_fix_offer.dart';
 import 'package:reparapp/UI/client_UI/client_images.dart';
 import 'package:reparapp/UI/client_UI/client_profile_fixer.dart';
+
 import 'package:reparapp/mock_image64.dart';
 import 'package:flutter/services.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
@@ -21,6 +22,7 @@ import 'UI/client_UI/client_profile.dart';
 import 'UI/fixer_UI/fixer_edit_profile.dart';
 import 'UI/fixer_UI/fixer_profile.dart';
 import 'UI/fixer_UI/fixer_signup.dart';
+import 'common/Status.dart';
 import 'domain/controller/firestore_controller.dart';
 import 'domain/controller/location_controller.dart';
 import 'domain/use_case/locator_service.dart';
@@ -42,7 +44,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final String mockImage = "";
-
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
