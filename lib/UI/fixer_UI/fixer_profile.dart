@@ -106,40 +106,55 @@ class _ProfilePageState extends State<FixerProfile> {
               widgetProfilePhoto(),
               Center(
                 child: Text(name,
-                    style: TextStyle(fontFamily: 'Inder', fontSize: 30)),
+                    style: TextStyle(fontFamily: 'Inder', fontSize: 30, fontWeight: FontWeight.bold)),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Email: " + email,
-                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
-                  ),
-                ],
+              Padding(
+                padding:
+                    EdgeInsets.only(top: 5.0, bottom: 5.0, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Email:",
+                        style: TextStyle(
+                            fontFamily: 'Inder',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    Text(email,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 20))
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("Phone: " + phone,
-                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
-                  ),
-                ],
+              Padding(
+                padding:
+                    EdgeInsets.only(top: 5.0, bottom: 5.0, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Phone:",
+                        style: TextStyle(
+                            fontFamily: 'Inder',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    Text(phone,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 20))
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 5.0, bottom: 5.0, left: 20, right: 20),
-                    child: Text("category: " + category,
-                        style: TextStyle(fontFamily: 'Inder', fontSize: 18)),
-                  ),
-                ],
+              Padding(
+                padding:
+                    EdgeInsets.only(top: 5.0, bottom: 5.0, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Category:",
+                        style: TextStyle(
+                            fontFamily: 'Inder',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    Text(category,
+                        style: TextStyle(fontFamily: 'Inder', fontSize: 20))
+                  ],
+                ),
               ),
               MainButtons(
                   wrenchVisibility: false, isProfile: true, isFixer: true)

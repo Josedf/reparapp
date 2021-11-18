@@ -5,13 +5,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+
+import 'package:get/get.dart';
+
 import 'package:reparapp/Models/Request_Model.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
+
+import 'client_profile_fixer.dart';
 
 class ClientFixOffer extends StatefulWidget {
   final String title;
@@ -153,11 +159,15 @@ class ClientFixOfferState extends State<ClientFixOffer> {
               padding: EdgeInsets.only(top: 10, left: 10, right: 10),
               child: Row(
                 children: [
-                  Text("Reparador: ",
+                  Text("Fixer: ",
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print("entro");
+                        print(widget.fixerEmail);
+                        Get.to(() => ClientProfileFixer(clientToFixer: true, fixerEmail: widget.fixerEmail,));
+                      },
                       child: Text(widget.fixerName,
                           style: TextStyle(
                               fontSize: 24,
