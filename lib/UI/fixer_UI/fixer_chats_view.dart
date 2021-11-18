@@ -13,8 +13,9 @@ class _FixerChatsViewState extends State<FixerChatsView> {
   int groupValue = 0;
 
   final Map<int, Widget> ChatsWidgets = <int, Widget>{
-    0: buildSegments('Chats'),
-    1: buildSegments('Requests'),
+    0: buildSegments('Requests'),
+    1: buildSegments('Fix History')
+
   };
 
   static Widget buildSegments(String text) => Container(

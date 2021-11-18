@@ -40,7 +40,6 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
       List<Request> clientOffers = await _firestoreService.getOffers(cliente!);
       clientOffers.removeWhere((element) => !element.fixerAgrees()  || (element.clientAgrees() && element.fixerAgrees()));
 
-      print(clientOffers[0].clientAgree);
       setState(() {
         clients_offers = clientOffers;
       });

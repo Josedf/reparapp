@@ -151,7 +151,7 @@ class _ClientHistoryState extends State<ClientHistory> {
                                       icon: Icon(Icons.update),
                                       color: Color(0xFFA5A6F6),
                                       onPressed: () {
-                                         Get.to(() => ClientProfileFixer());
+                                         //Get.to(() => ClientProfileFixer());
                                       },))
                               ],
                             ),
