@@ -36,7 +36,13 @@ class _FixerAllRequestsState extends State<FixerAllRequests> {
       List<Request> fixersRequests =
           await _firestoreService.getRequests(category!);
       setState(() {
-        fixers_requests = fixersRequests;
+        
+        for (Request request in fixersRequests){
+           if (request.fixerAgree != "True" && request.clientAgree != "True") {
+             fixers_requests.add(request);
+           }
+        }
+
       });
     }
   }
