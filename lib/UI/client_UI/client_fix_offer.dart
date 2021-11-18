@@ -118,7 +118,17 @@ class ClientFixOfferState extends State<ClientFixOffer> {
                 ],
               )),
           Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: Row(
+                children: [
+                  Text("Reparador: ",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  TextButton(onPressed: () {}, child: Text("Michael Myers", style: TextStyle(fontSize: 24, decoration: TextDecoration.underline)))
+                ],
+              )),
+          Padding(
+              padding: EdgeInsets.only(top: 20, left: 10, right: 10),
               child: ElevatedButton(
                 onPressed: () {},
                 child: Text("Accept offer",
