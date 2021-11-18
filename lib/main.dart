@@ -72,11 +72,11 @@ class MyApp extends StatelessWidget {
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
                     //return FixerMap();
-                    return FirebaseCentral();
-                    /* return ClientFixOffer(
+                    //return FirebaseCentral();
+                    return ClientFixOffer(
                         title: "Im a title",
                         image64List: getMockImage64(),
-                        price: "5000");*/
+                        price: "5000");
                   }
 
                   return Loading();

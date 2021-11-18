@@ -43,24 +43,31 @@ class ClientFixOfferState extends State<ClientFixOffer> {
   Widget slideshow() {
     //Slideshow con mocks
     return Center(
-        child: CarouselSlider(
-      options: CarouselOptions(
-        onPageChanged: (index, reason) {
-          current_index = index;
-          print("Image#: " + current_index.toString());
-        },
-        enlargeCenterPage: true,
-        enableInfiniteScroll: false,
-        autoPlay: false,
-      ),
-      items: widget.image64List
-          .map((img64) => ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Stack(
-                  children: <Widget>[decoder(img64)],
-                ),
-              ))
-          .toList(),
+        child: Container(
+          decoration: new BoxDecoration(
+            color: Colors.white
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: CarouselSlider(
+            options: CarouselOptions(
+              onPageChanged: (index, reason) {
+                current_index = index;
+                print("Image#: " + current_index.toString());
+              },
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              autoPlay: false,
+            ),
+            items: widget.image64List
+                .map((img64) => ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Stack(
+                        children: <Widget>[decoder(img64)],
+                      ),
+                    ))
+                .toList(),
+          ),)
     ));
   }
 
@@ -71,6 +78,7 @@ class ClientFixOfferState extends State<ClientFixOffer> {
             body: Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: EdgeInsets.only(top: 0),
@@ -96,55 +104,48 @@ class ClientFixOfferState extends State<ClientFixOffer> {
           ),
           slideshow(),
           Padding(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(widget.title,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold))),
-                Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text("Price: \$" + widget.price,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold))),
-
-                Padding(
-                    padding: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Accept offer",
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF7879F1),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                      ),
-                    )),
-
-                Padding(
-                    padding: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Counter offer",
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF7879F1),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                      ),
-                    )),
-                //0xFF666666
-              ],
-            ),
-          ),
+              padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+              child: Text(widget.title,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+          Padding(
+              padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+              child: Row(
+                children: [
+                  Text("Price: ",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text("\$" + widget.price, style: TextStyle(fontSize: 24))
+                ],
+              )),
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text("Accept offer",
+                    style: TextStyle(fontSize: 19, color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF7879F1),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text("Counter offer",
+                    style: TextStyle(fontSize: 19, color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF7879F1),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                ),
+              )),
+          //0xFF666666
           MainButtons(
             wrenchVisibility: false,
           )
