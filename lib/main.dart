@@ -2,9 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reparapp/UI/client_UI/client_counter_offer.dart';
+import 'package:reparapp/UI/client_UI/client_fix_offer.dart';
 import 'package:reparapp/UI/client_UI/client_images.dart';
 import 'package:reparapp/UI/client_UI/client_profile_fixer.dart';
-
+import 'package:reparapp/mock_image64.dart';
 import 'package:flutter/services.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_counter_offer.dart';
 
@@ -40,6 +41,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final String mockImage = "";
+
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,10 @@ class MyApp extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.done) {
                     //return FixerMap();
                     return FirebaseCentral();
+                    /*return ClientFixOffer(
+                        title: "Im a title",
+                        image64List: getMockImage64(),
+                        price: "5000");*/
                   }
 
                   return Loading();
