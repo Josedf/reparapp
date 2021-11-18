@@ -134,6 +134,9 @@ class _CreateRequestState extends State<ClientCreateRequest> {
         "img64": img64String,
         "latitude": locationController.userLocation.value.latitude.toString(),
         "longitude": locationController.userLocation.value.longitude.toString(),
+        "price": "0",
+        "clientAgree": "False",
+        "fixerAgree": "False"
       });
 
       print("Request created succesfully");

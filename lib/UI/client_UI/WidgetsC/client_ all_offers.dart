@@ -1,10 +1,57 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reparapp/Models/Message.dart';
-import 'package:reparapp/UI/widgets/main_buttons.dart';
 
-class ClientAllOffers extends StatelessWidget {
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:reparapp/Models/Message.dart';
+import 'package:reparapp/Models/Offer_Model.dart';
+import 'package:reparapp/Models/Request_Model.dart';
+import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
+
+class ClientAllOffers extends StatefulWidget {
+  const ClientAllOffers({Key? key}) : super(key: key);
+
   @override
+  _ClientAllOffersState createState() => _ClientAllOffersState();
+}
+
+class _ClientAllOffersState extends State<ClientAllOffers> {
+  List<Request> clients_offers=[];
+  final FirestoreService _firestoreService = Get.find();
+  void initState() {
+    super.initState();
+    User? user = FirebaseAuth.instance.currentUser;
+    String? em = user!.email;
+    getOfferInfo(em);
+  }
+
+  void getOfferInfo(em) async {
+    Map<String,String> clientmap = await _firestoreService.getClient(em);
+
+    if(clientmap.isNotEmpty && clientmap != null){
+      String? cliente = clientmap['phone'];
+
+      List<Request> clientOffers= await _firestoreService.getOffers(cliente!);
+      clientOffers.removeWhere((element) => element.fixerAgrees());
+
+
+      setState(() {
+
+        clients_offers = clientOffers;
+
+
+      });
+    }
+  }
+
+  Image decoder(String img64) {
+    return Image.memory(base64Decode(img64));
+  }
+
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -23,9 +70,10 @@ class ClientAllOffers extends StatelessWidget {
                 topRight: Radius.circular(30.0),
               ),
               child: ListView.builder(
-                  itemCount: clientChats.length,
+                  itemCount: clients_offers.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final Message userChat = clientChats[index];
+                    final Request offer = clients_offers[index];
+
                     return Container(
                       child: Container(
                         margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -51,8 +99,7 @@ class ClientAllOffers extends StatelessWidget {
                                     height: 130.0,
                                     width: 382.0,
                                     color: Colors.white,
-                                    child: Image.asset(userChat.sender.ppic,
-                                        width: 357, height: 130),
+                                    child: decoder(offer.image64List[0]),
                                   ),
                                 ),
                               ],
@@ -63,7 +110,7 @@ class ClientAllOffers extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      userChat.sender.name,
+                                      offer.title,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 16.0,
@@ -71,10 +118,13 @@ class ClientAllOffers extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5.0),
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
+                                      width: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .width *
                                           0.60,
                                       child: Text(
-                                        userChat.message,
+                                       offer.description,
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16.0,
@@ -82,10 +132,10 @@ class ClientAllOffers extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    Text(userChat.time,
+                                    Text(offer.time,
                                         style: TextStyle(
                                             color:
-                                                Colors.black.withOpacity(0.6))),
+                                            Colors.black.withOpacity(0.6))),
                                   ],
                                 ),
                                 Container(
@@ -102,6 +152,7 @@ class ClientAllOffers extends StatelessWidget {
                         ),
                       ),
                     );
+
                   }),
             ),
           ),
@@ -111,3 +162,5 @@ class ClientAllOffers extends StatelessWidget {
     );
   }
 }
+
+
