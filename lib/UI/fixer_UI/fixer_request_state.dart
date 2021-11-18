@@ -50,24 +50,31 @@ class FixerRequestState extends State<FixerRequest> {
   Widget slideshow() {
     //Slideshow con mocks
     return Center(
-        child: CarouselSlider(
-      options: CarouselOptions(
-        onPageChanged: (index, reason) {
-          current_index = index;
-          print("Image#: " + current_index.toString());
-        },
-        enlargeCenterPage: true,
-        enableInfiniteScroll: false,
-        autoPlay: false,
-      ),
-      items: widget.image64List
-          .map((img64) => ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Stack(
-                  children: <Widget>[decoder(img64)],
-                ),
-              ))
-          .toList(),
+        child: Container(
+          decoration: new BoxDecoration(
+            color: Colors.white
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: CarouselSlider(
+            options: CarouselOptions(
+              onPageChanged: (index, reason) {
+                current_index = index;
+                print("Image#: " + current_index.toString());
+              },
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              autoPlay: false,
+            ),
+            items: widget.image64List
+                .map((img64) => ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Stack(
+                        children: <Widget>[decoder(img64)],
+                      ),
+                    ))
+                .toList(),
+          ),)
     ));
   }
 

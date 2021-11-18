@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -13,6 +14,7 @@ class ClientFixOffer extends StatefulWidget {
   final List<String> image64List; //Image in base64;
   final String fixerEmail;
   final String fixerName;
+
 
   const ClientFixOffer(
       {Key? key,
@@ -47,6 +49,7 @@ class ClientFixOfferState extends State<ClientFixOffer> {
     //Slideshow con mocks
     return Center(
         child: Container(
+
             decoration: new BoxDecoration(color: Colors.white),
             child: Padding(
               padding: EdgeInsets.all(10),
@@ -135,6 +138,7 @@ class ClientFixOfferState extends State<ClientFixOffer> {
               )),
           Padding(
               padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+
               child: ElevatedButton(
                 onPressed: () {},
                 child: Text("Accept offer",
