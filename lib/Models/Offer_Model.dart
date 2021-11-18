@@ -1,4 +1,4 @@
-class Request {
+class Offer {
   final String address;
   final String category;
   final String city;
@@ -10,11 +10,9 @@ class Request {
   final String title;
   final String time;
   final String price;
-  final String clientAgree;
-  final String fixerAgree;
   //final String id;
 
-  Request({
+  Offer({
     required this.address,
     required this.category,
     required this.city,
@@ -25,18 +23,6 @@ class Request {
     required this.title,
     required this.time,
     required this.price,
-    required this.clientAgree,
-    required this.fixerAgree,
     //required this.id,
   });
-
-
-  bool clientAgrees(){
-    return clientAgree == "True";
-  }
-
-  bool fixerAgrees(){
-    return fixerAgree == "True";
-  }
-
 }
