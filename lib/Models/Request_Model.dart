@@ -1,4 +1,5 @@
 import '../common/Status.dart';
+
 class Request {
   final String address;
   final String category;
@@ -17,6 +18,8 @@ class Request {
   final String status;
   String fixerName;
   String fixerEmail;
+  String latitude;
+  String longitude;
 
   //final String id;
 
@@ -36,7 +39,9 @@ class Request {
       required this.requestId,
       required this.status,
       this.fixerName = "",
-      this.fixerEmail = ""});
+      this.fixerEmail = "",
+      this.latitude = "",
+      this.longitude = ""});
 
   bool clientAgrees() {
     return clientAgree == "True";

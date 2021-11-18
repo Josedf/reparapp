@@ -7,62 +7,46 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_utils/src/extensions/dynamic_extensions.dart';
 import 'package:reparapp/Models/Message.dart';
 import 'package:reparapp/Models/Offer_Model.dart';
 import 'package:reparapp/Models/Request_Model.dart';
+import 'package:reparapp/UI/fixer_UI/fixer_map.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
+import 'package:reparapp/domain/controller/location_controller.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
-import '../client_profile_fixer.dart';
-
-class ClientHistory extends StatefulWidget {
-  const ClientHistory({Key? key}) : super(key: key);
+class FixerHistory extends StatefulWidget {
+  const FixerHistory({Key? key}) : super(key: key);
 
   @override
-  _ClientHistoryState createState() => _ClientHistoryState();
+  _FixerHistoryState createState() => _FixerHistoryState();
 }
 
-class _ClientHistoryState extends State<ClientHistory> {
-  List<Request> clients_offers = [];
+class _FixerHistoryState extends State<FixerHistory> {
+  List<Request> fixers_requests = [];
   final FirestoreService _firestoreService = Get.find();
   void initState() {
     super.initState();
     User? user = FirebaseAuth.instance.currentUser;
     String? em = user!.email;
-    getOfferInfo(em);
-  }
-
-  void getOfferInfo(em) async {
-    Map<String, String> clientmap = await _firestoreService.getClient(em);
-
-    if (clientmap.isNotEmpty && clientmap != null) {
-      String? cliente = clientmap['phone'];
-
-      List<Request> clientOffers = await _firestoreService.getOffers(cliente!);
-      print(clientOffers[0].fixerAgrees());
-      print(clientOffers[0].clientAgrees());
-      clientOffers.removeWhere(
-          (element) => !(element.clientAgrees() && element.fixerAgrees()));
-
-      setState(() {
-        clients_offers = clientOffers;
-      });
-    }
+    getHistoryInfo(em);
   }
 
   void getHistoryInfo(em) async {
-    Map<String, String> clientmap = await _firestoreService.getFixer(em);
+    Map<String, String> fixermap = await _firestoreService.getFixer(em);
 
-    if (clientmap.isNotEmpty && clientmap != null) {
-      //String? category = fixermap['category'];
-      // List<Request> fixersRequests =
-      //     await _firestoreService.getRequests(category!);
-      List<Request> clientsCounterRequests =
+    if (fixermap.isNotEmpty && fixermap != null) {
+      String? category = fixermap['category'];
+      List<Request> fixersRequests =
+          await _firestoreService.getRequests(category!);
+      List<Request> fixersCounterRequests =
           await _firestoreService.getRequestsByEmailFixerAccepted(em);
       setState(() {
-        for (Request request in clientsCounterRequests) {
+        for (Request request in fixersCounterRequests) {
           //if (request.fixerEmail == em && request.getStatus() == Status.ACCEPTED) {
-          clients_offers.add(request);
+          fixers_requests.add(request);
           //}
         }
 
@@ -93,9 +77,9 @@ class _ClientHistoryState extends State<ClientHistory> {
                 topRight: Radius.circular(30.0),
               ),
               child: ListView.builder(
-                  itemCount: clients_offers.length,
+                  itemCount: fixers_requests.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final Request offer = clients_offers[index];
+                    final Request offer = fixers_requests[index];
 
                     return Container(
                       child: Container(
@@ -166,7 +150,19 @@ class _ClientHistoryState extends State<ClientHistory> {
                                       icon: Icon(Icons.update),
                                       color: Color(0xFFA5A6F6),
                                       onPressed: () {
-                                        //Get.to(() => ClientProfileFixer());
+                                        LocationController locationController =
+                                            Get.find();
+                                        // var lat = num.tryParse(offer.lat)?.toDouble();
+                                        // var lon = num.tryParse(offer.lon)?.toDouble();
+
+                                        String subLat =
+                                            offer.latitude.substring(0, 5);
+                                        String subLon =
+                                            offer.longitude.substring(0, 5);
+                                        double lat = double.parse(subLat);
+                                        double lon = double.parse(subLon);
+                                        Get.to(() => FixerMap(
+                                            latitud: lat, longitud: lon));
                                       },
                                     ))
                               ],

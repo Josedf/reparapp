@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reparapp/UI/fixer_UI/WidgetsF/fixer_all_chats.dart';
+import 'package:reparapp/UI/fixer_UI/WidgetsF/fixer_history.dart';
 
 import 'WidgetsF/fixer_all_requests.dart';
 
@@ -15,7 +16,6 @@ class _FixerChatsViewState extends State<FixerChatsView> {
   final Map<int, Widget> ChatsWidgets = <int, Widget>{
     0: buildSegments('Requests'),
     1: buildSegments('Fix History')
-
   };
 
   static Widget buildSegments(String text) => Container(
@@ -24,8 +24,9 @@ class _FixerChatsViewState extends State<FixerChatsView> {
       );
 
   List<Widget> bodies = [
-    FixerAllChats(),
+    //FixerAllChats(),
     FixerAllRequests(),
+    FixerHistory(),
   ];
 
   @override

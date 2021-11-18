@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reparapp/Models/Request_Model.dart';
+import 'package:reparapp/common/Status.dart';
 
 class FirestoreService {
   // Future<bool> getUsers(email) async {
@@ -162,6 +163,80 @@ class FirestoreService {
           fixerAgree: doc["fixerAgree"],
           requestId: doc.id,
         ));
+      }
+
+      return requestList;
+    }
+
+    return [];
+  }
+
+  Future<List<Request>> getRequestsByEmailFixerAccepted(
+      String fixerEmail) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore
+        .collection("requests")
+        .where('fixerEmail', isEqualTo: fixerEmail)
+        .where('status', isEqualTo: Status.ACCEPTED.toString());
+    List<Request> requestList = [];
+
+    QuerySnapshot Requests = await sRef.get();
+    if (Requests.docs.isNotEmpty) {
+      for (var doc in Requests.docs) {
+        requestList.add(Request(
+            address: doc["address"],
+            category: doc["category"],
+            city: doc["city"],
+            description: doc["description"],
+            image64List: doc["img64"].split(','),
+            clientName: doc["clientName"],
+            phone: doc["phone"],
+            title: doc["title"],
+            time: "13:00 pm",
+            price: doc["price"],
+            clientAgree: doc["clientAgree"],
+            status: doc["status"],
+            fixerAgree: doc["fixerAgree"],
+            requestId: doc.id,
+            latitude: doc["latitude"],
+            longitude: doc["longitude"]));
+      }
+
+      return requestList;
+    }
+
+    return [];
+  }
+
+  Future<List<Request>> getRequestsByEmailClientAccepted(
+      String clientEmail) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore
+        .collection("requests")
+        .where('clientEmail', isEqualTo: clientEmail)
+        .where('status', isEqualTo: Status.ACCEPTED.toString());
+    List<Request> requestList = [];
+
+    QuerySnapshot Requests = await sRef.get();
+    if (Requests.docs.isNotEmpty) {
+      for (var doc in Requests.docs) {
+        requestList.add(Request(
+            address: doc["address"],
+            category: doc["category"],
+            city: doc["city"],
+            description: doc["description"],
+            image64List: doc["img64"].split(','),
+            clientName: doc["clientName"],
+            phone: doc["phone"],
+            title: doc["title"],
+            time: "13:00 pm",
+            price: doc["price"],
+            clientAgree: doc["clientAgree"],
+            status: doc["status"],
+            fixerAgree: doc["fixerAgree"],
+            requestId: doc.id,
+            latitude: doc["latitude"],
+            longitude: doc["longitude"]));
       }
 
       return requestList;

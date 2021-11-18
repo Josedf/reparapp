@@ -7,7 +7,11 @@ import 'package:reparapp/domain/controller/location_controller.dart';
 import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class FixerMap extends StatefulWidget {
-  const FixerMap({Key? key}) : super(key: key);
+  final double latitud;
+  final double longitud;
+
+  const FixerMap({Key? key, required this.latitud, required this.longitud})
+      : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -76,14 +80,16 @@ class _MyAppState extends State<FixerMap> {
                   ElevatedButton(
                       key: const Key("client loc"),
                       onPressed: () async {
-                        await locationController.updatedMarker();
+                        await locationController.updatedMarker(
+                            widget.latitud, widget.longitud);
                       },
                       child: const Text("client loc")),
                   ElevatedButton(
                       key: const Key("currentLocation"),
                       onPressed: () async {
                         await locationController.getLocation();
-                        await locationController.updatedMarker();
+                        await locationController.updatedMarker(
+                            widget.latitud, widget.longitud);
                       },
                       child: const Text("Current")),
 
