@@ -10,8 +10,8 @@ import 'package:reparapp/domain/use_case/locator_service.dart';
 class LocationController extends GetxController {
   final userLocation = UserLocation(latitude: 0, longitude: 0).obs;
   var errorMsg = "".obs;
-  var requestLat = "10.926312658949284".obs;
-  var requestLong = "-74.80101286794627".obs;
+  var requestLat = "0.000001".obs;
+  var requestLong = "0.000001".obs;
   var _liveUpdate = false.obs;
   //var markers = <Marker>[].obs;
   var markers = <MarkerId, Marker>{}.obs;
@@ -25,20 +25,16 @@ class LocationController extends GetxController {
     userLocation.value = UserLocation(latitude: 0, longitude: 0);
   }
 
-  updatedMarker() {
+  updatedMarker(double latitud, double longitud) {
     markers.clear();
     printInfo(info: "Updading marker list");
-    double x = double.parse(requestLat.value);
-    double y = double.parse(requestLong.value);
-    printInfo(info: x.toString());
-    printInfo(info: y.toString());
     if (changeMarkers) {
       Marker marker = Marker(
         infoWindow: InfoWindow(title: '0', snippet: '*'),
         icon: BitmapDescriptor.defaultMarker,
         markerId: MarkerId('0'),
         //position: LatLng(10.926312658949284, -74.80101286794627),
-        position: LatLng(x, y),
+        position: LatLng(latitud, longitud),
       );
       markers[const MarkerId('0')] = marker;
 
