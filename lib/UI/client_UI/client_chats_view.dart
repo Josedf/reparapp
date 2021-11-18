@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'WidgetsC/ClientHistory.dart';
 import 'WidgetsC/client_ all_offers.dart';
 import 'WidgetsC/client_all_chats.dart';
 
@@ -16,8 +17,9 @@ class _ClientChatsViewState extends State<ClientChatsView> {
   int groupValue = 0;
 
   final Map<int, Widget> ChatsWidgets = <int, Widget>{
-    0: buildSegments('Chats'),
-    1: buildSegments('Offers'),
+    0:buildSegments('Offers'),
+
+    1: buildSegments('History'),
   };
 
   static Widget buildSegments(String text) => Container(
@@ -28,8 +30,9 @@ class _ClientChatsViewState extends State<ClientChatsView> {
 
 
   List<Widget> bodies = [
-    ClientAllChats(),
     ClientAllOffers(),
+    ClientHistory(),
+
   ];
 
   @override

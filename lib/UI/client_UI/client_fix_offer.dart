@@ -2,12 +2,20 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+
 import 'package:get/get.dart';
+
 import 'package:reparapp/Models/Request_Model.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 import 'client_profile_fixer.dart';
 
@@ -17,6 +25,7 @@ class ClientFixOffer extends StatefulWidget {
   final List<String> image64List; //Image in base64;
   final String fixerEmail;
   final String fixerName;
+  final Request request;
 
 
   const ClientFixOffer(
@@ -25,7 +34,8 @@ class ClientFixOffer extends StatefulWidget {
       required this.image64List,
       required this.price,
       required this.fixerEmail,
-      required this.fixerName})
+      required this.fixerName,
+      required this.request})
       : super(key: key);
 
   @override
@@ -33,6 +43,7 @@ class ClientFixOffer extends StatefulWidget {
 }
 
 class ClientFixOfferState extends State<ClientFixOffer> {
+  final FirestoreService _firestoreService = Get.find();
   int current_index = 0;
   @override
   void initState() {
@@ -43,6 +54,26 @@ class ClientFixOfferState extends State<ClientFixOffer> {
     'assets/images/fixR1.jpg',
     'assets/images/fixR2.jpg',
   ];
+
+
+
+  void _changeClientAgree(Request request) async {
+
+    final _firestore = FirebaseFirestore.instance;
+    String requestId = request!.requestId;
+
+    if (request != null) {
+      DocumentReference documentReferencer =
+      _firestore.collection("requests").doc(requestId);
+      await documentReferencer.update({
+        "clientAgree": "True" ,
+
+      });
+
+    }
+  }
+
+
 
   Image decoder(String img64) {
     return Image.memory(base64Decode(img64));
@@ -147,7 +178,12 @@ class ClientFixOfferState extends State<ClientFixOffer> {
               padding: EdgeInsets.only(top: 20, left: 10, right: 10),
 
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _changeClientAgree(widget.request);
+
+                  Get.back();
+
+                },
                 child: Text("Accept offer",
                     style: TextStyle(fontSize: 19, color: Colors.white)),
                 style: ElevatedButton.styleFrom(
