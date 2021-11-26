@@ -102,7 +102,7 @@ class _LoginPageState extends State<ClientLogIn> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            "ReparApp",
+            "HomeTech",
             style: TextStyle(fontFamily: 'Inder', fontSize: 40),
           ),
           const Text(

@@ -108,7 +108,7 @@ class _LoginPageState extends State<FixerLogIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "ReparApp",
+                "HomeTech",
                 style: TextStyle(fontFamily: 'Inder', fontSize: 48),
               ),
               const Text(

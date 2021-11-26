@@ -36,17 +36,19 @@ class _FixerHistoryState extends State<FixerHistory> {
 
   void getHistoryInfo(em) async {
     Map<String, String> fixermap = await _firestoreService.getFixer(em);
-
+    
     if (fixermap.isNotEmpty && fixermap != null) {
       String? category = fixermap['category'];
       List<Request> fixersRequests =
           await _firestoreService.getRequests(category!);
       List<Request> fixersCounterRequests =
           await _firestoreService.getRequestsByEmailFixerAccepted(em);
+          print(fixersCounterRequests);
       setState(() {
         for (Request request in fixersCounterRequests) {
           //if (request.fixerEmail == em && request.getStatus() == Status.ACCEPTED) {
           fixers_requests.add(request);
+          
           //}
         }
 
@@ -175,7 +177,7 @@ class _FixerHistoryState extends State<FixerHistory> {
             ),
           ),
         ),
-        MainButtons()
+        MainButtons(wrenchVisibility: false, isFixer: true)
       ],
     );
   }

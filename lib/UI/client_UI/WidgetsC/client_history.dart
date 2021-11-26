@@ -39,8 +39,8 @@ class _ClientHistoryState extends State<ClientHistory> {
       String? cliente = clientmap['phone'];
 
       List<Request> clientOffers = await _firestoreService.getOffers(cliente!);
-      print(clientOffers[0].fixerAgrees());
-      print(clientOffers[0].clientAgrees());
+      //print(clientOffers[0].fixerAgrees());
+      //print(clientOffers[0].clientAgrees());
       clientOffers.removeWhere(
           (element) => !(element.clientAgrees() && element.fixerAgrees()));
 
@@ -63,6 +63,7 @@ class _ClientHistoryState extends State<ClientHistory> {
         for (Request request in clientsCounterRequests) {
           //if (request.fixerEmail == em && request.getStatus() == Status.ACCEPTED) {
           clients_offers.add(request);
+          print(request.status.toString());
           //}
         }
 

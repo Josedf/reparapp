@@ -24,6 +24,7 @@ final offerController = TextEditingController();
 class _SetOfferState extends State<FixerSetOffer> {
   final FirestoreService _firestoreService = Get.find();
   User? user = FirebaseAuth.instance.currentUser;
+  
   void _setOffer(String price) async {
     final _firestore = FirebaseFirestore.instance;
     String email = user!.email.toString();

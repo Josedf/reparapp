@@ -1,11 +1,16 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reparapp/Models/Request_Model.dart';
 import 'package:reparapp/UI/fixer_UI/fixer_set_offer.dart';
 import 'package:reparapp/UI/widgets/main_buttons.dart';
+import 'package:reparapp/common/Status.dart';
+import 'package:reparapp/domain/use_case/firestore_service.dart';
 
 class FixerRequest extends StatefulWidget {
   final String address;
@@ -33,6 +38,9 @@ class FixerRequest extends StatefulWidget {
 
 class FixerRequestState extends State<FixerRequest> {
   int current_index = 0;
+  final FirestoreService _firestoreService = Get.find();
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +53,24 @@ class FixerRequestState extends State<FixerRequest> {
 
   Image decoder(String img64) {
     return Image.memory(base64Decode(img64));
+  }
+
+  void _updateStatus(
+      Status status, String fixerAgree, String clientAgree) async {
+    final _firestore = FirebaseFirestore.instance;
+    
+    String email = user!.email.toString();
+    DocumentReference documentReferencer =
+        _firestore.collection("requests").doc(widget.requestId);
+    print(status);
+    Map<String, String> fixer = await _firestoreService.getFixer(email);
+    await documentReferencer.update({
+      "fixerName": fixer["name"],
+      "fixerEmail": email,
+      "fixerAgree": fixerAgree,
+      "clientAgree": clientAgree,
+      "status": status.toString()
+    });
   }
 
   Widget slideshow() {
@@ -140,13 +166,10 @@ class FixerRequestState extends State<FixerRequest> {
                     child: ElevatedButton(
                       onPressed: () {
                         print(widget.requestId);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FixerSetOffer(
-                                    requestId: widget.requestId)));
+                        _updateStatus(Status.ACCEPTED,"True","True");
+                        Get.back();
                       },
-                      child: Text("Check Offer",
+                      child: Text("Accept Offer",
                           style: TextStyle(fontSize: 16, color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF7879F1),
