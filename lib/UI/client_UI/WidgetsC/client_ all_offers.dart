@@ -39,7 +39,7 @@ class _ClientAllOffersState extends State<ClientAllOffers> {
       String? cliente = clientmap['phone'];
 
       List<Request> clientOffers = await _firestoreService.getOffers(cliente!);
-      clientOffers.removeWhere((element) => !element.fixerAgrees()  || (element.clientAgrees() && element.fixerAgrees()) || (element.getStatus() == Status.DECLINED) );
+      clientOffers.removeWhere((element) => (element.getStatus() == Status.ACCEPTED) || (element.getStatus() == Status.DECLINED) );
 
       setState(() {
         clients_offers = clientOffers;
